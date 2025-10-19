@@ -1,0 +1,598 @@
+/* Hide native Marzipano list if you kept it */
+.m4-hide-native { display:none !important; }
+
+/* Launcher */
+.m4-btn{
+  position:fixed; top:12px; right:12px; z-index:9998;
+  padding:.5rem .75rem; border:0; border-radius:.6rem;
+  background:#0b0d12; color:#fff; font:600 14px system-ui; cursor:pointer;
+}
+
+/* Backdrop / dialog */
+.m4-backdrop[aria-hidden="true"]{ display:none; }
+.m4-backdrop{
+  position:fixed; inset:0; z-index:9999;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.45);
+}
+.m4-dialog{
+  width:min(1200px,95vw);
+  height:min(780px,95svh);           /* use svh for mobile browser chrome */
+  display:flex; flex-direction:column; color:#fff;
+  background:rgba(12,14,20,.88); border-radius:14px; overflow:hidden;
+}
+
+/* Header */
+.m4-head{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 14px; background:rgba(0,0,0,.35);
+}
+.m4-icon{ background:none; border:none; color:#fff; font-size:20px; cursor:pointer; }
+
+.m4-body{ flex:1; display:flex; flex-direction:column; min-height:0; }
+
+/* Search (shrunken) */
+.m4-search-wrap{ padding:8px; }
+#m4-search{
+  inline-size:40%;
+  max-inline-size:280px;
+  padding:.5rem .75rem; border-radius:8px; outline:none;
+  border:1px solid rgba(255,255,255,.25); background:#0b0d12; color:#fff;
+}
+
+/* Row: list + map */
+.m4-list-map{
+  flex:1; min-height:0; display:flex; gap:12px; padding:8px;
+}
+
+/* Scene list column */
+.m4-listwrap{
+  flex:0 0 280px; min-width:220px; max-width:360px;
+  overflow:auto; background:rgba(0,0,0,.30); border-right:1px solid rgba(255,255,255,.1);
+  border-radius:10px; padding:8px;
+  -webkit-overflow-scrolling: touch;
+}
+.m4-listwrap ul.scenes{ list-style:none; margin:0; padding:0; }
+.m4-listwrap li.group-li{ list-style:none; margin:0 0 6px 0; }
+/*.m4-listwrap .group{
+  font-weight:700; cursor:pointer; padding:6px 8px; border-radius:6px;
+  display:flex; align-items:center; gap:8px;
+}
+.m4-listwrap .group:hover{ background:rgba(255,255,255,.08); }
+.m4-listwrap .group .m4-arrow{ transition:transform .15s ease; }
+.m4-listwrap .group[aria-expanded="true"] .m4-arrow{ transform:rotate(90deg); }
+*/
+.m4-listwrap ul.children{
+  list-style:none; margin:4px 0 8px 8px; padding:0; display:none;
+}
+.m4-listwrap .group[aria-expanded="true"] + ul.children{ display:block; }
+
+/* Row markup: <a.scene><li.text>… */
+.m4-listwrap a.scene{ display:block; text-decoration:none; color:inherit; }
+.m4-listwrap a.scene li.text{
+  padding:6px 10px; border-radius:6px; cursor:pointer;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.m4-listwrap a.scene li.text:hover{ background:rgba(255,255,255,.10); }
+a.scene.active{background:rgba(80,200,120,.2)}
+a.scene.m4-dragging{opacity:.35}
+
+/* Themed scrollbar for list (WebKit + Firefox) */
+.m4-listwrap{
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.35) rgba(255,255,255,.08);
+}
+.m4-listwrap::-webkit-scrollbar{ width:10px; }
+.m4-listwrap::-webkit-scrollbar-track{ background:rgba(255,255,255,.08); border-radius:10px; }
+.m4-listwrap::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,.35); border-radius:10px; border:2px solid transparent;
+}
+
+/* Map */
+.m4-mapwrap{
+  flex:1; position:relative; display:flex; align-items:center; justify-content:center;
+  min-height:520px; overflow:hidden; border-radius:12px; background:#0b0d12;
+  user-select:none; touch-action:none;        /* enables pinch & drag via JS */
+}
+.m4-mapwrap img{
+  max-width:100%; max-height:100%; object-fit:contain; display:block;
+  transform-origin:center center;
+}
+#m4-stage {
+  position: absolute;
+  top: 0; left: 0;
+  transform-origin: 0 0; /* anchor zoom/pan */
+}
+
+.m4-mapstage { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
+.m4-mapstage > img,
+.m4-mapstage > .m4-pinlayer { position: absolute; inset: 0; width:100%; height:100%; object-fit: contain; }
+.m4-pinlayer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+
+/* Pins */
+.m4-pin{
+  position:absolute; width:16px; height:16px; border-radius:50%;
+  transform:translate(-50%,-50%); cursor:pointer;
+  background:#1e90ff; border:2px solid #fff; box-shadow:0 3px 12px rgba(0,0,0,.35);
+  touch-action:none;
+}
+.m4-pin[data-type="info"]{ background:orange; }
+.m4-pin[data-active="1"]{ background:#34c759; border:2px solid #fff; }
+
+/* Footer */
+.m4-foot{
+  display:flex; align-items:center; gap:8px; padding:8px; background:rgba(0,0,0,.35);
+}
+.m4-action{
+  padding:.35rem .65rem; border-radius:6px;
+  border:1px solid rgba(255,255,255,.25); background:#111; color:#fff; cursor:pointer;
+}
+.m4-edit{ margin-left:auto; display:flex; gap:6px; align-items:center; }
+.m4-edit input,.m4-edit select{
+  padding:.3rem .5rem; border-radius:6px; border:1px solid rgba(255,255,255,.25);
+  background:#0b0d12; color:#fff; font-size:13px;
+}
+
+/* Info popup */
+.m4-info-popup{
+  position:fixed; top:20%; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,.88); border:1px solid rgba(255,255,255,.2);
+  padding:1rem; border-radius:10px; max-width:520px; width:min(92vw,520px);
+  max-height:320px; z-index:10000; display:flex; flex-direction:column; color:#fff;
+}
+.m4-info-content{ flex:1; overflow-y:auto; margin-bottom:10px; }
+#m4-info-view{ white-space:pre-wrap; }
+#m4-info-text{
+  display:block; width:100%; height:160px; resize:vertical; background:#111; color:#fff;
+  border:1px solid #333; border-radius:6px; padding:.5rem;
+}
+.m4-info-actions{ display:flex; justify-content:space-between; gap:8px; }
+
+/* Drag helpers */
+.m4-dragging { opacity:.4; }
+.m4-drag-ghost{height:10px;border-radius:6px;background:rgba(255,255,255,.12);margin:2px 6px;}
+.group.m4-dragging{opacity:.35}
+.m4-editing{outline:1px dashed rgba(255,255,255,.35)}
+
+/* ===== Mobile tweaks (default phone sizes) ===== */
+@media (max-width: 768px){
+  .m4-dialog{
+    width:100vw; height:100svh;
+    max-width:none; max-height:none; border-radius:0;
+  }
+
+  /* Keep header & search visible, content scrolls beneath */
+  .m4-head{ position:sticky; top:0; z-index:2; }
+  .m4-search-wrap{
+    position:sticky; top:48px; z-index:2;
+    background:rgba(12,14,20,.88);
+  }
+
+  .m4-list-map{
+    flex-direction:column;
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .m4-listwrap{ flex:0 0 auto; max-height:40vh; }
+  .m4-mapwrap{ flex:1; min-height:40vh; }
+
+  /* Avoid iOS zoom on inputs */
+  #m4-search{ font-size:16px; }
+}
+
+/* Lock page scroll while open */
+html.m4-open, body.m4-open { overflow:hidden; touch-action:none; }
+
+/* Pin pulse */
+@keyframes m4pulse { 0%{box-shadow:0 0 0 0 rgba(52,199,89,.6)} 100%{box-shadow:0 0 0 14px rgba(52,199,89,0)} }
+.m4-pin.m4-pulse { animation: m4pulse 650ms ease-out 1; }
+
+/* Home/Reset button (top-left of the map) */
+.m4-mapbtn{
+  position:absolute; top:10px; left:10px; z-index:5;
+  padding:.4rem .55rem; border-radius:8px;
+  border:1px solid rgba(255,255,255,.25);
+  background:#111; color:#fff; cursor:pointer; font-size:14px;
+  box-shadow:0 2px 10px rgba(0,0,0,.35);
+}
+
+/* Stage wrapper (added by JS around the map image and pinlayer) */
+.m4-mapstage {
+  position: relative;
+  display: inline-block;
+  transform-origin: 0 0;     /* critical so zoom/translate works properly */
+  will-change: transform;
+}
+
+/* Inside the stage, image and pinlayer should be absolute and fill stage */
+.m4-mapstage > img,
+.m4-mapstage > .m4-pinlayer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+}
+/* button inside header */
+.m4-gbtn{
+  all: unset;
+  display:flex; align-items:center; gap:8px;
+  padding:6px 8px; border-radius:6px; cursor:pointer;
+}
+.m4-gbtn:hover{ background:rgba(255,255,255,.08); }
+
+/* arrow rotation tied to header state */
+.group[aria-expanded="true"] .m4-arrow{ transform: rotate(90deg); }
+.m4-arrow{ transition: transform .15s ease; }
+
+/* small drag handle only in DEV */
+.m4-grip{ margin-left:auto; cursor:grab; opacity:.6; user-select:none; }
+.m4-grip:active{ cursor:grabbing; opacity:.9; }
+#map-viewer { touch-action: none; cursor: grab; }
+/* ---- Info pin: polished look + micro-interaction ---- */
+.m4-pin[data-type="info"]{
+  background:#ffb020;
+  border:0;
+  width:18px; height:18px;
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,.25),
+    0 6px 16px rgba(0,0,0,.35),
+    0 0 0 0 rgba(255,176,32,.0);
+  transition: transform .15s ease, box-shadow .25s ease, background-color .2s;
+}
+.m4-pin[data-type="info"]:hover{
+  transform:translate(-50%,-50%) scale(1.06);
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,.25),
+    0 8px 18px rgba(0,0,0,.45),
+    0 0 0 8px rgba(255,176,32,.18);
+}
+.m4-pin[data-type="info"]::after{
+  content:"i";
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font:700 12px/1.1 system-ui; color:#151515;
+}
+
+
+/* ---- Info Popup: centered over map only ---- */
+.m4-info-popup {
+  position: absolute;            /* Keep it within map container */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;                 /* Ensure it’s above map & UI */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: saturate(120%) blur(6px);
+  border-radius: 14px;
+  color: #fff;
+  width: min(640px, 90vw);
+  padding: 0;
+  animation: m4fade 0.2s ease;
+}
+
+.m4-info-popup.m4-open{ display:flex; }
+@keyframes m4fade{ from{opacity:0} to{opacity:1} }
+
+.m4-info-card{
+  width:min(880px, 92vw);
+  background: rgba(14,16,22,.96);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  padding: 14px;
+}
+
+/* Head */
+.m4-info-head{
+  display:flex; align-items:center; gap:10px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding: 6px 6px 10px 6px;
+}
+.m4-info-head h3{ margin:0; font:600 16px system-ui, sans-serif; }
+.m4-icon-btn{
+  margin-left:auto; border:0; background:transparent; color:#fff;
+  font-size:18px; cursor:pointer; opacity:.85;
+}
+.m4-icon-btn:hover{ opacity:1; }
+
+/* Body: split in dev, stacked in non-dev */
+.m4-info-body{
+  display:grid; gap:16px; padding:12px 6px;
+  grid-template-columns: 1fr 1fr;    /* DEV default: split */
+}
+body:not(.is-dev) .m4-info-body{
+  display:block;                     /* Non-dev: stacked */
+}
+
+/* Columns */
+.m4-info-left{ display:flex; flex-direction:column; gap:12px; }
+.m4-info-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+/* Fields */
+.m4-field{ display:flex; flex-direction:column; gap:6px; }
+.m4-label{ font:600 12px/1.2 system-ui; color:#cbd5e1; opacity:.9 }
+.m4-input, .m4-textarea{
+  background:#0b0d12; color:#fff;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:10px; padding:.6rem .75rem; outline:none;
+}
+.m4-input:focus, .m4-textarea:focus{
+  border-color:rgba(99,179,237,.6);
+  box-shadow:0 0 0 2px rgba(99,179,237,.25);
+}
+
+/* Preview */
+.m4-preview{
+  width:100%; text-align:center;
+  background:rgba(255,255,255,.03);
+  border:1px dashed rgba(255,255,255,.12);
+  border-radius:12px; padding:10px;
+}
+
+.m4-preview figcaption{ margin-top:8px; color:#9ca3af; font:500 12px/1.2 system-ui }
+
+/* Buttons */
+.m4-info-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.m4-btn {
+  appearance: none;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: #111827;
+  color: #fff;
+  padding: .5rem .9rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font: 600 13px system-ui;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.m4-btn:hover { background: #162034; transform: scale(1.03); }
+.m4-btn:active { transform: scale(0.97); }
+.m4-btn-ghost { background: transparent; border-color: rgba(255,255,255,0.1); }
+.m4-btn-ghost:hover { background: rgba(255,255,255,0.08); }
+
+/* Hide dev-only controls in non-dev */
+body:not(.is-dev) .dev-only{ display:none !important; }
+
+/* Mobile */
+@media (max-width: 760px){
+  .m4-info-card{ width: 94vw; }
+  .m4-info-body{ grid-template-columns: 1fr; }
+}
+
+/* quick toast */
+.m4-toast{
+  position:fixed; right:20px; bottom:20px;
+  background:rgba(25,255,120,.12);
+  color:#8affc0;
+  font:600 13px system-ui;
+  padding:8px 14px; border-radius:8px;
+  border:1px solid rgba(80,255,150,.3);
+  backdrop-filter: blur(8px);
+  animation:m4toast 1.5s ease;
+  z-index:100000;
+}
+@keyframes m4toast{
+  0%{opacity:0; transform:translateY(8px)}
+  10%{opacity:1; transform:translateY(0)}
+  90%{opacity:1; transform:translateY(0)}
+  100%{opacity:0; transform:translateY(8px)}
+}
+
+.m4-dev-only{ display:none; }
+.is-dev .m4-dev-only{ display:block; }
+
+/* Hide the built-in Marzipano scene title overlay */
+.scene-name,
+.m4-scene-title,
+.marzipano-title,
+.viewer-title,
+#sceneTitle,
+.sceneTitle {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+/* Hide hotspot hover and static tooltips */
+.link-hotspot .hotspot-tooltip,
+.info-hotspot .info-hotspot-tooltip,
+.info-hotspot .info-hotspot-label,
+.hotspot-tooltip,
+.hotspot-title,
+.tooltip,
+.tooltip-inner {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Prevent :hover popups entirely */
+.link-hotspot:hover::after,
+.link-hotspot:hover::before,
+.info-hotspot:hover::after,
+.info-hotspot:hover::before {
+  display: none !important;
+  content: none !important;
+}
+/* Hide Marzipano default scene title bar entirely */
+#titleBar,
+#titleBar *,
+.sceneName {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+/* --- Auto Tour Button --- */
+/* --- Auto Tour Button (final alignment) --- */
+#m4-tour-btn-container,
+.m4-tour-controls {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100%;
+  text-align: center;
+  padding-top: 6px;
+  margin-top: 6px;
+  margin-bottom: 0;
+  transform: translateY(-6px); /* lift it closer to the caption */
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Make visible when required */
+#m4-tour-btn-container.visible,
+.m4-tour-controls.visible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: translateY(-4px); /* fine-tuned lift */
+}
+
+/* Button styling consistent with MapUI theme */
+.m4-tour-btn {
+  background: rgba(15, 15, 20, 0.8);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 9px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  margin: 0 auto !important;
+  display: inline-block !important;
+}
+
+.m4-tour-btn:hover {
+  background: rgba(0, 86, 184, 0.85);
+  border-color: rgba(0, 140, 255, 0.3);
+  box-shadow: 0 0 14px rgba(0, 120, 255, 0.5);
+  transform: scale(1.05);
+}
+
+/* --- Fix tour button visibility --- */
+.m4-tour-controls {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.m4-tour-controls.visible {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 9999 !important;
+}
+
+.m4-preview[hidden] + .m4-tour-controls {
+  display: flex !important; /* Ensure button still shows even if figure is hidden */
+}
+
+#map-image, #map-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* The overall layer that pins sit on */
+.m4-pinlayer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;   /* layer itself does not block */
+  overflow: visible;
+}
+
+/* Individual pins inside the layer */
+.m4-pin {
+  pointer-events: auto !important; /* allow clicking again */
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  z-index: 5;
+}
+/* Force unhide tour button even if parent figure is [hidden] */
+#m4-info-preview[hidden] + #m4-tour-btn-container,
+#m4-info-preview[hidden] ~ #m4-tour-btn-container,
+.m4-preview[hidden] + .m4-tour-controls,
+.m4-preview[hidden] ~ .m4-tour-controls {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+/* Force show button even if image preview is hidden */
+.m4-preview[hidden] + .m4-tour-controls {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.m4-tour-controls {
+  transition: opacity 0.3s ease;
+  justify-content: center;
+  align-items: center;
+}
+
+.m4-tour-controls button {
+  cursor: pointer;
+}
+#m4-info-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+
+#m4-info-img {
+  display: block;
+  margin: 0 auto 8px auto;
+  border-radius: 6px;
+  object-fit: contain;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+#m4-info-caption {
+  margin-top: 8px;
+  text-align: center;
+  color: #ccc;
+  font-size: 0.9rem;
+  max-width: 85%;
+  line-height: 1.4em;
+}
+#m4-pinlayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: none !important;
+  pointer-events: none;
+  z-index: 20;
+}

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Cemetery Map • Standalone Editor</title>
+  <link rel="stylesheet" href="editor.css"/>
+</head>
+<body>
+  <header class="hdr">
+    <h1>Cemetery Map</h1>
+    <div class="hdr-right">
+      <input id="sceneSearch" class="search" placeholder="Search scenes…"/>
+      <input id="dataPicker" type="file" accept=".js" style="display:none"/>
+      <button id="btnPickData" class="btn" title="Load data.js">Load data.js</button>
+      <input id="mapUrlGlobal" class="search" placeholder="Global map image URL (all scenes)"/>
+      <span id="pinTag" class="tag">—</span>
+      <button id="btnImport" class="btn" title="Import JSON">Import</button>
+      <button id="btnDownload" class="btn" title="Download JSON">Download JSON</button>
+      <button id="btnSaveTop" class="btn primary" title="Save (Ctrl/Cmd+S)">Save</button>
+    </div>
+  </header>
+
+  <main class="grid3">
+    <!-- LEFT: Scene list -->
+    <aside class="panel sceneCol">
+      <div id="sceneList" class="sceneList"></div>
+    </aside>
+
+    <!-- CENTER: Map + pins (stage inside allows panning) -->
+    <section class="panel mapCol">
+      <div id="mapWrap" class="m4-mapwrap">
+        <div id="stage" class="m4-stage">
+          <img id="mapImg" alt="Map"/>
+          <div id="pinLayer" class="m4-pinlayer"></div>
+        </div>
+      </div>
+      <div class="hint">Drag to pan • Click to add when in “Add” mode • Drag pins to move</div>
+      <div class="zoomCtl">
+        <button id="zoomOut" class="btn small">–</button>
+        <button id="zoomReset" class="btn small">100%</button>
+        <button id="zoomIn" class="btn small">+</button>
+        </div>
+    </section>
+
+    <!-- RIGHT: Info editor (disabled unless "Info" selected) -->
+    <section id="infoPanel" class="panel form disabled">
+      <label class="field">
+        <span class="label">Title</span>
+        <input id="titleInput" type="text" placeholder="e.g. Pioneer Grave"/>
+      </label>
+      <label class="field">
+        <span class="label">Caption</span>
+        <input id="captionInput" type="text" placeholder="Short caption under image"/>
+      </label>
+      <label class="field">
+        <span class="label">Body</span>
+        <textarea id="bodyInput" rows="8" placeholder="Description (supports line breaks)"></textarea>
+      </label>
+
+      <div class="row">
+        <label class="field grow">
+          <span class="label">Image URL</span>
+          <input id="imgUrlInput" type="url" placeholder="https://…"/>
+        </label>
+        <div class="or">or</div>
+        <label class="upload">
+          <input id="imgFileInput" type="file" accept="image/*"/>
+          <span>Choose File</span>
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="label">Image Size</span>
+        <input id="imgSizeInput" type="range" min="120" max="640" value="360"/>
+        <div class="range-val"><span id="imgSizeVal">360</span> px</div>
+      </label>
+
+      <details class="adv">
+        <summary>Advanced</summary>
+        <label class="toggle">
+          <input id="useHtmlInput" type="checkbox"/>
+          <span>Interpret body as HTML (otherwise plain text)</span>
+        </label>
+        <label class="toggle">
+          <input id="transparentBgInput" type="checkbox"/>
+          <span>Transparent preview background</span>
+        </label>
+      </details>
+
+      <div class="preview-head">
+        <span>Live Preview</span>
+        <button id="btnReset" class="btn ghost small" title="Reset">Reset</button>
+      </div>
+      <h3 id="titleOut" class="titleOut"></h3>
+      <figure id="fig" class="card">
+        <img id="img" alt=""/>
+        <figcaption id="cap"></figcaption>
+      </figure>
+      <article id="bodyOut" class="card body"></article>
+    </section>
+  </main>
+
+  <footer class="ftr">
+    <div class="actionRow">
+      <button id="btnAddHotspot" class="btn">Add Hotspot</button>
+      <button id="btnAddInfo" class="btn">Add Info</button>
+      <button id="btnResetPins" class="btn">Reset</button>
+
+      <!-- Quick edit fields for selected pin -->
+      <input id="inpSceneId" class="input small" placeholder="Scene ID (empty for info)">
+      <input id="inpDisplay" class="input small" placeholder="Display Name / Info text">
+      <select id="selKind" class="input small">
+        <option value="hotspot">Hotspot</option>
+        <option value="info">Info</option>
+      </select>
+
+      <button id="btnSave" class="btn">Save</button>
+      <button id="btnDelete" class="btn">Delete</button>
+      <button id="btnCopy" class="btn">Copy Config</button>
+    </div>
+    <div id="status" class="status">Starting…</div>
+  </footer>
+
+  <!-- Toasts -->
+  <div id="toasts" class="toasts"></div>
+
+  <script type="module" src="editor.js"></script>
+</body>
+</html>

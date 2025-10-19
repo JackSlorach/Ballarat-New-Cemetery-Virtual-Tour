@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Scene Label Editor (Multi-Area)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="labelEditor.css" />
+</head>
+<body>
+  <header id="topbar">
+    <h1>Scene Label Editor (Multi-Area)</h1>
+    <div class="toolbar">
+      <button id="saveJson">💾 Save JSON</button>
+      <button id="loadJson">📂 Load JSON</button>
+      <button id="copyJson">📋 Copy JSON</button>
+    </div>
+  </header>
+
+  <main id="layout">
+    <aside id="sceneList">
+      <h2>Scenes</h2>
+      <ul id="sceneListItems"></ul>
+    </aside>
+
+    <section id="viewport">
+      <div id="pano"></div>
+      <div id="northMarker">🧭 North</div>
+      <div id="labelHint">Click inside the panorama to set yaw/pitch</div>
+    </section>
+
+    <aside id="propsPanel">
+      <h2>Label Properties</h2>
+
+      <label>Scene ID
+        <input id="sceneId" type="text" readonly />
+      </label>
+
+      <!-- NEW: scene-wide label -->
+      <label>Scene-wide label (entire scene)
+        <div style="display:flex; gap:6px;">
+          <input id="sceneWide" type="text" placeholder="e.g. Rose Garden" style="flex:1;" />
+          <button id="clearSceneWide" type="button" title="Clear">✖</button>
+        </div>
+      </label>
+
+      <label>Area Name
+        <input id="areaName" type="text" placeholder="Area name" />
+      </label>
+
+      <label>Yaw (°)
+        <input id="yaw" type="number" step="0.1" />
+      </label>
+
+      <label>Pitch (°)
+        <input id="pitch" type="number" step="0.1" />
+      </label>
+
+      <label>North (°)
+        <input id="north" type="number" step="1" />
+      </label>
+
+      <div class="btns">
+        <button id="setNorth">📍 Set North from View</button>
+        <button id="saveLabel">💾 Save / Add Label</button>
+        <button id="deleteLabel">🗑️ Delete Selected</button>
+      </div>
+
+      <h3>Existing Labels</h3>
+      <ul id="areaList"></ul>
+    </aside>
+  </main>
+
+  <!-- Load base tour libs FIRST, synchronously, from parent folder -->
+  <script src="/vendor/marzipano.js"></script>
+  <script>
+    if (!window.Marzipano) {
+      alert("Marzipano failed to load at ../marzipano.js. Check the path.");
+    }
+  </script>
+  <script src="../data.js"></script>
+
+  <!-- Editor logic LAST -->
+  <script src="labelEditor.js"></script>
+</body>
+</html>

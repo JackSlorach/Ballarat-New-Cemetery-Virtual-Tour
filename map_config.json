@@ -1,0 +1,606 @@
+{
+  "list": {
+    "groups": {
+      "BirdsongG": "Birdsong Gardens",
+      "Stone Drive FG": "Stone Drive Fountain Gardens",
+      "Chapel": "Chapel",
+      "Norman Street Gate": "0-lawn-e-gate",
+      "Ungrouped": "Ungrouped"
+    },
+    "scenes": {
+      "100-birdsongg-5": "Birdsong Gardens",
+      "70-stone-drive-fg--2": "Fountain Gardens",
+      "212-crem10": "Chapel",
+      "0-lawn-e-gate": "Norman Street Gate",
+      "52-wesleyan-b-3": "Tanderra Memorial Gardens",
+      "107-birdsongg-12": "Birdsong Walk",
+      "9-chinesegarden": "Chinese Block",
+      "5-lawn-e-d": "Private Blocks",
+      "25-bailey-drive-5": "Latvian",
+      "241-theterraces-3": "The Terraces",
+      "159-stone-drive-lawn-k-conifer-gardens---1": "Conifer Gardens",
+      "37-private-c-6": "Childrens's Corner",
+      "90-birdsong--9": "Birch Forest",
+      "18-coea-b": "Church Of England",
+      "11-orphan-block": "Orphan Block",
+      "93-birdsong--12": "Open Ground A,B",
+      "166-stone-drive-open-ground-f---3": "Open Ground F",
+      "177-horsefall-1": "Pensioner Burial Ground",
+      "83-presbyterian-a-b-8": "Presbyterian",
+      "46-barnard-drive-7": "Wesleyan",
+      "197-methd-3": "Methodist",
+      "136-dixie-drive-roman-catholic-b-d---3": "Roman Catholic",
+      "60-german-2": "Independent Section",
+      "61-roman-b-german-1": "German Lutheran",
+      "245-cooper-drive-5": "Islamic",
+      "39-private-c-8": "Hebrew",
+      "55-hill-coe-e-1": "Hill Block",
+      "216-rosegarden-4": "Rose Garden",
+      "115-crawcourdrv-4": "Highview Gardens"
+    },
+    "order": {
+      "groups": [
+        "Visible",
+        "Ungrouped"
+      ],
+      "items": {
+        "Visible": [
+          "100-birdsongg-5",
+          "70-stone-drive-fg--2",
+          "212-crem10",
+          "0-lawn-e-gate",
+          "52-wesleyan-b-3",
+          "107-birdsongg-12",
+          "9-chinesegarden",
+          "5-lawn-e-d",
+          "25-bailey-drive-5",
+          "241-theterraces-3",
+          "159-stone-drive-lawn-k-conifer-gardens---1",
+          "37-private-c-6",
+          "90-birdsong--9",
+          "18-coea-b",
+          "11-orphan-block",
+          "93-birdsong--12",
+          "166-stone-drive-open-ground-f---3",
+          "177-horsefall-1",
+          "83-presbyterian-a-b-8",
+          "46-barnard-drive-7",
+          "197-methd-3",
+          "136-dixie-drive-roman-catholic-b-d---3",
+          "60-german-2",
+          "61-roman-b-german-1",
+          "245-cooper-drive-5",
+          "39-private-c-8",
+          "55-hill-coe-e-1",
+          "216-rosegarden-4",
+          "115-crawcourdrv-4"
+        ],
+        "Ungrouped": [],
+        "Chapel": [
+          "37-private-c-6",
+          "18-coea-b"
+        ],
+        "BirdsongG": [
+          "90-birdsong--9",
+          "25-bailey-drive-5",
+          "61-roman-b-german-1"
+        ],
+        "Norman Street Gate": [
+          "46-barnard-drive-7"
+        ],
+        "Stone Drive FG": [
+          "61-roman-b-german-1"
+        ]
+      }
+    }
+  },
+  "pins": [
+    {
+      "x": 75.934066,
+      "y": 58.077226,
+      "type": "hotspot",
+      "sceneId": "100-birdsongg-5",
+      "displayName": "Birdsong Gardens"
+    },
+    {
+      "x": 15.24690384851192,
+      "y": 62.74588619520161,
+      "type": "hotspot",
+      "sceneId": "70-stone-drive-fg--2",
+      "displayName": "Stone Drive Fountain Gardens"
+    },
+    {
+      "x": 72.507123,
+      "y": 60.674157,
+      "type": "info",
+      "sceneId": "Birdsong Gardens",
+      "displayName": "Birdsong Gardens is a modern headstone garden area introduced to combine the openness of a lawn with the beauty of extensive garden beds. As the name suggests, this section is designed so that the sounds of native birds and scenic views enhance the atmosphere. Birdsong Gardens covers a large sloping expanse of lush green lawn interspersed with spacious beds of exotic and native shrubs.",
+      "image": "birdsong.jpg",
+      "tour": "birdsong_gardens.json"
+    },
+    {
+      "x": 45.01855552383671,
+      "y": 90.71758225398243,
+      "type": "hotspot",
+      "sceneId": "0-lawn-e-gate",
+      "displayName": "Norman Street Gate"
+    },
+    {
+      "x": 26.74850128461319,
+      "y": 17.70879857079053,
+      "type": "hotspot",
+      "sceneId": "212-crem10",
+      "displayName": "Chapel"
+    },
+    {
+      "x": 16.797488,
+      "y": 61.204955,
+      "type": "info",
+      "sceneId": "Fountain Gardens",
+      "displayName": "Fountain Gardens is a memorial garden area centered around water features, one of the earliest of the cemetery’s dedicated cremation gardens. Likely constructed in the 1970s, it signaled a new era of cemetery design focused on beauty and serenity.",
+      "image": "fountaingardens.jpg"
+    },
+    {
+      "x": 21.367521,
+      "y": 68.028601,
+      "type": "info",
+      "sceneId": "Tanderra Memorial Gardens",
+      "displayName": "Tanderra Memorial Gardens is a picturesque garden section introduced to further expand options for cremation memorials and ashes interment. “Tanderra” is an Aboriginal word meaning “resting place,” and the garden lives up to its name as a calm haven for remembrance. ",
+      "image": "tanderra.jpg"
+    },
+    {
+      "x": 22.370487,
+      "y": 71.706081,
+      "type": "hotspot",
+      "sceneId": "52-wesleyan-b-3",
+      "displayName": "Tanderra Memorial Gardens"
+    },
+    {
+      "x": 72.934473,
+      "y": 65.372829,
+      "type": "hotspot",
+      "sceneId": "107-birdsongg-12",
+      "displayName": "Birdsong Walk"
+    },
+    {
+      "x": 73.361823,
+      "y": 66.39428,
+      "type": "info",
+      "sceneId": "Birdsong Walk",
+      "displayName": "Birdsong Walk is a companion feature to the Birdsong Gardens, consisting of a winding pathway through the terraced gardens and wooded areas on the eastern side of the cemetery.",
+      "image": "birdsongwalk.jpg"
+    },
+    {
+      "x": 64.725275,
+      "y": 88.337273,
+      "type": "hotspot",
+      "sceneId": "9-chinesegarden",
+      "displayName": "Chinese Block"
+    },
+    {
+      "x": 63.846154,
+      "y": 90.937746,
+      "type": "info",
+      "sceneId": "Chinese Block",
+      "displayName": "Created during the gold rush era, this section was set aside for Ballarat’s Chinese community, who faced segregation in life and death. Burials followed traditional rites, including paper burning at a brick altar that still stands today. Many graves were later exhumed and repatriated to China, leaving empty markers behind. Once on the cemetery’s fringe, the area is now restored and celebrated as a memorial to the Chinese contribution to Ballarat’s history.",
+      "image": "chinese-block.jpg"
+    },
+    {
+      "x": 57.201309,
+      "y": 85.152582,
+      "type": "hotspot",
+      "sceneId": "5-lawn-e-d",
+      "displayName": "Private Blocks"
+    },
+    {
+      "x": 60.448718,
+      "y": 85.08046,
+      "type": "info",
+      "sceneId": "Private Blocks",
+      "displayName": "These areas were set aside from the late 19th century for families who purchased exclusive plots. Here, families could erect grand headstones, monuments, and vaults, many of which remain today. The sections reflect Ballarat’s prosperity, with Victorian and early 20th-century styles on display. Burials here often include multiple generations, and the “private” status ensures graves are maintained in perpetuity.",
+      "image": "private.jpg"
+    },
+    {
+      "x": 33.076923,
+      "y": 84.206897,
+      "type": "hotspot",
+      "sceneId": "25-bailey-drive-5",
+      "displayName": "Latvian"
+    },
+    {
+      "x": 32.115385,
+      "y": 85.908046,
+      "type": "info",
+      "sceneId": "Latvian",
+      "displayName": "A lesser-known but distinctive area is the Latvian section (marked “Latvian A” on the map). This small section was established in the post-World War II period, when Ballarat – like much of Australia – welcomed displaced persons and immigrants from Eastern Europe. "
+    },
+    {
+      "x": 69.80057,
+      "y": 49.029622,
+      "type": "hotspot",
+      "sceneId": "241-theterraces-3",
+      "displayName": "The Terraces"
+    },
+    {
+      "x": 72.649573,
+      "y": 47.088866,
+      "type": "info",
+      "sceneId": "The Terraces",
+      "displayName": "The Terraces is a unique headstone lawn section set on a terraced slope, offering a panoramic view of the surrounding district. Opened in the early 21st century on one of the highest elevations of the cemetery.",
+      "image": "theterraces.jpg"
+    },
+    {
+      "x": 21.225071,
+      "y": 46.986721,
+      "type": "hotspot",
+      "sceneId": "159-stone-drive-lawn-k-conifer-gardens---1",
+      "displayName": "Conifer Gardens"
+    },
+    {
+      "x": 23.956044,
+      "y": 46.808511,
+      "type": "info",
+      "sceneId": "Conifer Gardens",
+      "displayName": "A small headstone lawn area laid out in a single row with a backdrop of various conifer plantings",
+      "image": "conifergardens.jpg"
+    },
+    {
+      "x": 14.166667,
+      "y": 75.954023,
+      "type": "info",
+      "sceneId": "Children's Corner",
+      "displayName": "Children’s Corner provides a tranquil, private area of native flora. For children 12 months to 12 yrs. Bronze plaques on natural rocks or polished granite headstones are placed within the garden beds overlooking the lawn. Garden seats allow peaceful and calming contemplation.",
+      "image": "childrenscorner2.jpg"
+    },
+    {
+      "x": 15.494505,
+      "y": 77.541371,
+      "type": "hotspot",
+      "sceneId": "37-private-c-6",
+      "displayName": "Childrens's Corner"
+    },
+    {
+      "x": 65.099715,
+      "y": 67.722165,
+      "type": "hotspot",
+      "sceneId": "90-birdsong--9",
+      "displayName": "Birch Forest"
+    },
+    {
+      "x": 67.636023,
+      "y": 67.900404,
+      "type": "info",
+      "sceneId": "Birch Forest",
+      "displayName": "Birch Forest offers a stately, individual tree for memorialisation overlooking colourful Birdsong Gardens.",
+      "image": "birch forest.jpg"
+    },
+    {
+      "x": 52.564103,
+      "y": 70.480082,
+      "type": "hotspot",
+      "sceneId": "18-coea-b",
+      "displayName": "Church Of England"
+    },
+    {
+      "x": 55.164835,
+      "y": 66.666667,
+      "type": "info",
+      "sceneId": "Church Of England",
+      "displayName": "Established in 1867, the Church of England section was one of the original denominational areas in the New Cemetery. During Ballarat’s gold era, Anglican burials were placed here under the auspices of the Church of England, reflecting the dominance of Anglican colonists.",
+      "image": "coe.jpg"
+    },
+    {
+      "x": 52.421652,
+      "y": 80.388151,
+      "type": "hotspot",
+      "sceneId": "11-orphan-block",
+      "displayName": "Orphan Block"
+    },
+    {
+      "x": 58.560794,
+      "y": 79.003559,
+      "type": "info",
+      "sceneId": "Orphan Block",
+      "displayName": "The Orphan Block is a special area historically used for burying children from the Ballarat Orphanage and other local institutions. The Ballarat Orphan Asylum (later Orphanage) opened in 1866 and cared for thousands of children, many of whom had no family to claim them in death.",
+      "image": "orphanblock.jpg"
+    },
+    {
+      "x": 67.24359,
+      "y": 72.551724,
+      "type": "info",
+      "sceneId": "Open Ground A,B",
+      "displayName": "The Open Ground sections were reserved for those who did not purchase a private plot effectively common graves for burials funded by family collections or charitable/public expense. From the 1860s, Ballarat authorities ensured that even the poor or unknown could receive a burial, and the “Open Ground” made this possible. ",
+      "image": "openground.jpg"
+    },
+    {
+      "x": 64.529915,
+      "y": 74.259448,
+      "type": "hotspot",
+      "sceneId": "93-birdsong--12",
+      "displayName": "Open Ground A,B"
+    },
+    {
+      "x": 18.901099,
+      "y": 56.895193,
+      "type": "info",
+      "sceneId": "Open Ground F",
+      "displayName": "The Open Ground sections were reserved for those who did not purchase a private plot effectively common graves for burials funded by family collections or charitable/public expense. From the 1860s, Ballarat authorities ensured that even the poor or unknown could receive a burial, and the “Open Ground” made this possible. ",
+      "image": "openground.jpg"
+    },
+    {
+      "x": 18.191268,
+      "y": 39.970172,
+      "type": "info",
+      "sceneId": "Open Ground C,D,E",
+      "displayName": "The Open Ground sections were reserved for those who did not purchase a private plot effectively common graves for burials funded by family collections or charitable/public expense. From the 1860s, Ballarat authorities ensured that even the poor or unknown could receive a burial, and the “Open Ground” made this possible. ",
+      "image": "openground.jpg"
+    },
+    {
+      "x": 19.230769,
+      "y": 53.830439,
+      "type": "hotspot",
+      "sceneId": "166-stone-drive-open-ground-f---3",
+      "displayName": "Open Ground F"
+    },
+    {
+      "x": 22.417582,
+      "y": 28.289992,
+      "type": "hotspot",
+      "sceneId": "177-horsefall-1",
+      "displayName": "Pensioner Burial Ground"
+    },
+    {
+      "x": 55.494505,
+      "y": 47.156532,
+      "type": "info",
+      "sceneId": "Roman Catholic Section",
+      "displayName": "The Roman Catholic section dates back to the cemetery’s opening and was set aside for Ballarat’s substantial Irish Catholic community in the 19th century. It features many early graves of goldfields families, often marked by Celtic crosses and angels, reflecting Catholic iconography.",
+      "image": "roman2.jpg"
+    },
+    {
+      "x": 57.692308,
+      "y": 29.215205,
+      "type": "info",
+      "sceneId": "Church Of England",
+      "displayName": "Established in 1867, the Church of England section was one of the original denominational areas in the New Cemetery. During Ballarat’s gold era, Anglican burials were placed here under the auspices of the Church of England, reflecting the dominance of Anglican colonists.",
+      "image": "coe.jpg"
+    },
+    {
+      "x": 39.74359,
+      "y": 64.530963,
+      "type": "info",
+      "sceneId": "Church Of England",
+      "displayName": "Established in 1867, the Church of England section was one of the original denominational areas in the New Cemetery. During Ballarat’s gold era, Anglican burials were placed here under the auspices of the Church of England, reflecting the dominance of Anglican colonists.",
+      "image": "coe.jpg"
+    },
+    {
+      "x": 38.205128,
+      "y": 48.099326,
+      "type": "info",
+      "sceneId": "Roman Catholic Section",
+      "displayName": "The Roman Catholic section dates back to the cemetery’s opening and was set aside for Ballarat’s substantial Irish Catholic community in the 19th century. It features many early graves of goldfields families, often marked by Celtic crosses and angels, reflecting Catholic iconography.",
+      "image": "roman2.jpg"
+    },
+    {
+      "x": 52.772809,
+      "y": 58.627325,
+      "type": "hotspot",
+      "sceneId": "83-presbyterian-a-b-8",
+      "displayName": "Presbyterian"
+    },
+    {
+      "x": 28.422425,
+      "y": 77.255727,
+      "type": "hotspot",
+      "sceneId": "46-barnard-drive-7",
+      "displayName": "Wesleyan"
+    },
+    {
+      "x": 31.277213,
+      "y": 73.217074,
+      "type": "info",
+      "sceneId": "Wesleyan",
+      "displayName": "The Wesleyan section – designated for Wesleyan Methodists – reflects the strong Methodist presence in Ballarat’s early years. In the mid-1800s, Wesleyan Methodists were a significant portion of the mining community, and the cemetery trustees allocated them a central area.",
+      "image": "wesleyan.jpg"
+    },
+    {
+      "x": 29.317852,
+      "y": 64.679854,
+      "type": "info",
+      "sceneId": "Wesleyan",
+      "displayName": "The Wesleyan section – designated for Wesleyan Methodists – reflects the strong Methodist presence in Ballarat’s early years. In the mid-1800s, Wesleyan Methodists were a significant portion of the mining community, and the cemetery trustees allocated them a central area.",
+      "image": "wesleyan.jpg"
+    },
+    {
+      "x": 34.760522,
+      "y": 81.025508,
+      "type": "info",
+      "sceneId": "Private Blocks",
+      "displayName": "These areas were set aside from the late 19th century for families who purchased exclusive plots. Here, families could erect grand headstones, monuments, and vaults, many of which remain today. The sections reflect Ballarat’s prosperity, with Victorian and early 20th-century styles on display. Burials here often include multiple generations, and the “private” status ensures graves are maintained in perpetuity.",
+      "image": "private.jpg"
+    },
+    {
+      "x": 23.076923,
+      "y": 81.910463,
+      "type": "info",
+      "sceneId": "Private Blocks",
+      "displayName": "These areas were set aside from the late 19th century for families who purchased exclusive plots. Here, families could erect grand headstones, monuments, and vaults, many of which remain today. The sections reflect Ballarat’s prosperity, with Victorian and early 20th-century styles on display. Burials here often include multiple generations, and the “private” status ensures graves are maintained in perpetuity.",
+      "image": "private.jpg"
+    },
+    {
+      "x": 52.683363,
+      "y": 31.430404,
+      "type": "hotspot",
+      "sceneId": "197-methd-3",
+      "displayName": "Methodist"
+    },
+    {
+      "x": 48.837209,
+      "y": 31.36626,
+      "type": "info",
+      "sceneId": "Methodist",
+      "displayName": "Following the 1902 union of Methodist denominations (Wesleyan, Primitive Methodist, Bible Christian), the cemetery created a unified Methodist section.",
+      "image": "methodist.jpg"
+    },
+    {
+      "x": 53.186813,
+      "y": 45.547675,
+      "type": "hotspot",
+      "sceneId": "136-dixie-drive-roman-catholic-b-d---3",
+      "displayName": "Dixie Drive Roman Catholic B-D - 3"
+    },
+    {
+      "x": 37.179487,
+      "y": 55.87334,
+      "type": "hotspot",
+      "sceneId": "60-german-2",
+      "displayName": "German-2"
+    },
+    {
+      "x": 34.045584,
+      "y": 57.303371,
+      "type": "info",
+      "sceneId": "Independent",
+      "displayName": "The Independent section was set aside for those Protestant denominations that were not aligned to the major churches, as well as for non-denominational burials. In the 19th century, “Independent” generally included Congregationalists, Baptists, and other free churches or individuals of Protestant faith without a dedicated area.",
+      "image": "indi.jpg"
+    },
+    {
+      "x": 54.582651,
+      "y": 56.455399,
+      "type": "info",
+      "sceneId": "Presbyterian Section",
+      "displayName": "Ballarat’s Presbyterian section was created in the 1860s to serve Scottish and Ulster Protestant settlers drawn by the gold rush. Early gravestones here often bear Scottish thistle motifs or scriptural epitaphs, reflecting Presbyterian traditions.",
+      "image": "presbyterian.jpg"
+    },
+    {
+      "x": 37.97054,
+      "y": 36.619718,
+      "type": "info",
+      "sceneId": "Presbyterian Section",
+      "displayName": "Ballarat’s Presbyterian section was created in the 1860s to serve Scottish and Ulster Protestant settlers drawn by the gold rush. Early gravestones here often bear Scottish thistle motifs or scriptural epitaphs, reflecting Presbyterian traditions.",
+      "image": "presbyterian.jpg"
+    },
+    {
+      "x": 42.735043,
+      "y": 55.26047,
+      "type": "hotspot",
+      "sceneId": "61-roman-b-german-1",
+      "displayName": "German Lutheran"
+    },
+    {
+      "x": 41.557223,
+      "y": 57.604307,
+      "type": "info",
+      "sceneId": "German Lutheran",
+      "displayName": "Reflecting Ballarat’s German immigrant community, a German Lutheran section was established in the 19th century. German settlers, including miners and tradespeople, brought their Lutheran faith and sought their own consecrated ground.",
+      "image": "german.jpg"
+    },
+    {
+      "x": 66.524217,
+      "y": 29.315628,
+      "type": "hotspot",
+      "sceneId": "245-cooper-drive-5",
+      "displayName": "Cooper Drive-5"
+    },
+    {
+      "x": 69.088319,
+      "y": 28.089888,
+      "type": "info",
+      "sceneId": "Cooper Drive-5",
+      "displayName": "In the late 20th century, an Islamic section was created in Ballarat New Cemetery to serve the city’s growing Muslim community. Earlier cemeteries did not have a distinct Muslim area, but as Ballarat became more multicultural, the cemetery trust allocated a space for Islamic burials.",
+      "image": "islamic.jpg"
+    },
+    {
+      "x": 16.317016,
+      "y": 27.382943,
+      "type": "info",
+      "sceneId": "Cooper Drive-5",
+      "displayName": "The Pensioner Burial Ground is an historic portion of the cemetery designated for elderly or indigent individuals who died on government old-age pensions or in poverty. It originated in the 1860s, soon after the New Cemetery opened, when the idea emerged to ensure that impoverished settlers – often miners who had grown old with little savings – could be buried respectfully even if they lacked private means.",
+      "image": "pensionerburialground.jpg"
+    },
+    {
+      "x": 22.079772,
+      "y": 77.425945,
+      "type": "hotspot",
+      "sceneId": "39-private-c-8",
+      "displayName": "Hebrew"
+    },
+    {
+      "x": 20.37037,
+      "y": 74.872319,
+      "type": "info",
+      "sceneId": "Hebrew",
+      "displayName": "A dedicated Hebrew section highlights Ballarat’s early Jewish community. During the gold rush, a significant number of Jewish miners and merchants settled in Ballarat, warranting a sanctified Jewish burial ground.",
+      "image": "hebrew.jpeg"
+    },
+    {
+      "x": 49.57265,
+      "y": 76.813075,
+      "type": "hotspot",
+      "sceneId": "55-hill-coe-e-1",
+      "displayName": "Hill Block"
+    },
+    {
+      "x": 43.447293,
+      "y": 76.302349,
+      "type": "info",
+      "sceneId": "Hill Block",
+      "displayName": "The Hill Block, as its name suggests, occupies elevated ground within the cemetery and came into use around the early to mid-20th century. Unlike the older sections named by denomination, “Hill Block” was a general section that initially accommodated new graves once lower areas filled.",
+      "image": "hill.jpg"
+    },
+    {
+      "x": 25.071225,
+      "y": 14.606742,
+      "type": "hotspot",
+      "sceneId": "216-rosegarden-4",
+      "displayName": "Rose Garden"
+    },
+    {
+      "x": 20.432692,
+      "y": 15.057471,
+      "type": "info",
+      "sceneId": "Rose Garden",
+      "displayName": "The Rose Garden is a landscaped area near the cemetery’s chapel entrance that was established to inter cremated remains and to provide a serene place of reflection.",
+      "image": "rose.jpg"
+    },
+    {
+      "x": 52.35732,
+      "y": 17.348754,
+      "type": "info",
+      "sceneId": "Poet’s Walk",
+      "displayName": "The Poet’s Walk is a memorial path introduced as part of the cemetery’s garden expansion to create a peaceful walking area with poetic inspiration.",
+      "image": "poetswalk2.jpg"
+    },
+    {
+      "x": 44.378698,
+      "y": 13.083451,
+      "type": "info",
+      "sceneId": "Bushwalk",
+      "displayName": "The Bushwalk section is a naturalistic memorial area that capitalizes on Ballarat New Cemetery’s remnant bushland. Created to offer an Australian native backdrop for memorials, the Bushwalk winds through eucalyptus and native shrubs in the northern part of the cemetery. ",
+      "image": "bushwalk.jpg"
+    },
+    {
+      "x": 52.884615,
+      "y": 21.632184,
+      "type": "hotspot",
+      "sceneId": "115-crawcourdrv-4",
+      "displayName": "Highview Gardens"
+    },
+    {
+      "x": 56.282051,
+      "y": 18.965517,
+      "type": "info",
+      "sceneId": "Highview Gardens",
+      "displayName": "Highview Gardens is a garden lawn area introduced to provide a setting with Australian native plants and a picturesque outlook. Developed later in the 20th century, Highview Gardens borders a natural bush reserve, giving it a rustic ambiance.",
+      "image": "highview.jpg"
+    },
+    {
+      "x": 57.326007,
+      "y": 14.182534,
+      "type": "info",
+      "sceneId": "Dreamtime",
+      "displayName": "“Dream Time” is a uniquely named section that likely serves as a memorial garden or walk incorporating Indigenous Australian themes. The use of the term “Dream Time” (an English approximation of the Aboriginal concept of Dreaming) suggests this area was conceived with respect for Aboriginal cultural heritage or as a tranquil space symbolizing creation and eternal connection to the land. ",
+      "image": "dreamtime.jpg"
+    }
+  ]
+}
