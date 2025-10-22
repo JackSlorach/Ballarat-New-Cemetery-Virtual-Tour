@@ -3,7 +3,7 @@
   "description": "An automatic walkthrough of the Birdsong Gardens section, from the entrance through the full circular path.",
   "duration": 8500,
   "autorotate": true,
-  "loop": true,
+  "loop": false,
   "scenes": [
     "96-birdsongg-1",
     "97-birdsongg-2",
@@ -24,40 +24,22 @@
     "112-birdsongg-17"
   ],
   "waypoints": [
-    {
-      "sceneId": "96-birdsongg-1",
-      "label": "Birdsong Entrance",
-      "yaw": 0.0,
-      "pitch": 0.0,
-      "wait": 4000
-    },
-    {
-      "sceneId": "97-birdsongg-2",
-      "label": "Main Lawn Entry",
-      "yaw": -0.2,
-      "pitch": 0.1,
-      "wait": 4000 
-    },
-    {
-      "sceneId": "100-birdsongg-5",
-      "label": "Central Gardens",
-      "yaw": 0.1,
-      "pitch": 0.05,
-      "wait": 4000
-    },
-    {
-      "sceneId": "106-birdsongg-11",
-      "label": "Memorial Path",
-      "yaw": -0.3,
-      "pitch": 0.05,
-      "wait": 4000
-    },
-    {
-      "sceneId": "112-birdsongg-17",
-      "label": "Garden Loop Exit",
-      "yaw": 0.0,
-      "pitch": 0.0,
-      "wait": 4000
-    }
+    { "sceneId": "96-birdsongg-1",  "yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "97-birdsongg-2",  "yaw": -0.2, "pitch": 0.1, "wait": 4000 },
+    { "sceneId": "98-birdsongg-3",  "yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "99-birdsongg-4",  "yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "100-birdsongg-5", "yaw": 0.1,  "pitch": 0.05,"wait": 4000 },
+    { "sceneId": "101-birdsongg-6", "yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "102-birdsongg-7", "yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "103-birdsongg-8", "yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "104-birdsongg-9", "yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "105-birdsongg-10","yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "106-birdsongg-11","yaw": -0.3, "pitch": 0.05,"wait": 4000 },
+    { "sceneId": "107-birdsongg-12","yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "108-birdsongg-13","yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "109-birdsongg-14","yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "110-birdsongg-15","yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "111-birdsongg-16","yaw": 0.0,  "pitch": 0.0,  "wait": 4000 },
+    { "sceneId": "112-birdsongg-17","yaw": 0.0,  "pitch": 0.0,  "wait": 4000 }
   ]
 }

@@ -887,3 +887,11 @@ body.autorotate-on .main .navigation.active .autorotate.reveal #autorotateIcon{
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
+#label-hud,
+#label-compass,
+#label-compass #comp-ruler,
+#label-compass #comp-caret {
+  position: fixed;          /* ensure fixed but low layer */
+  z-index: 5 !important;    /* LOW: behind panels/menus */
+  pointer-events: none;     /* never block clicks */
+}

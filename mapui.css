@@ -92,29 +92,42 @@ a.scene.m4-dragging{opacity:.35}
 .m4-mapwrap{
   flex:1; position:relative; display:flex; align-items:center; justify-content:center;
   min-height:520px; overflow:hidden; border-radius:12px; background:#0b0d12;
-  user-select:none; touch-action:none;        /* enables pinch & drag via JS */
+  user-select:none; touch-action:none;
 }
+
 .m4-mapwrap img{
   max-width:100%; max-height:100%; object-fit:contain; display:block;
   transform-origin:center center;
 }
+
 #m4-stage {
   position: absolute;
   top: 0; left: 0;
-  transform-origin: 0 0; /* anchor zoom/pan */
+  transform-origin: 0 0; 
 }
 
-.m4-mapstage { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
-.m4-mapstage > img,
-.m4-mapstage > .m4-pinlayer { position: absolute; inset: 0; width:100%; height:100%; object-fit: contain; }
-.m4-pinlayer {
+
+.m4-mapstage {
+  position: absolute; top: 0; left: 0;
+  transform-origin: 0 0; will-change: transform;
+}
+
+
+.m4-mapstage > img {
   position: absolute;
-  top: 0; left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
+  object-fit: contain;
 }
 
+
+.m4-mapstage > .m4-pinlayer {
+  position: absolute;
+
+  pointer-events: none;
+  overflow: visible;
+}
 
 /* Pins */
 .m4-pin{
@@ -125,6 +138,7 @@ a.scene.m4-dragging{opacity:.35}
 }
 .m4-pin[data-type="info"]{ background:orange; }
 .m4-pin[data-active="1"]{ background:#34c759; border:2px solid #fff; }
+
 
 /* Footer */
 .m4-foot{
@@ -448,21 +462,18 @@ body:not(.is-dev) .dev-only{ display:none !important; }
   pointer-events: none !important;
 }
 /* --- Auto Tour Button --- */
-/* --- Auto Tour Button (final alignment) --- */
+
 #m4-tour-btn-container,
-.m4-tour-controls {
-  display: flex !important;
-  justify-content: center !important;
+.m4-tour-controls{
+  display: flex !important;                
+  justify-content: flex-end !important;    
   align-items: center !important;
-  width: 100%;
-  text-align: center;
+  width: 100% !important;
+  text-align: right !important;
   padding-top: 6px;
   margin-top: 6px;
   margin-bottom: 0;
-  transform: translateY(-6px); /* lift it closer to the caption */
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(-6px);
 }
 
 /* Make visible when required */
@@ -470,7 +481,7 @@ body:not(.is-dev) .dev-only{ display:none !important; }
 .m4-tour-controls.visible {
   visibility: visible !important;
   opacity: 1 !important;
-  transform: translateY(-4px); /* fine-tuned lift */
+  transform: translateY(-6px); 
 }
 
 /* Button styling consistent with MapUI theme */
@@ -495,7 +506,7 @@ body:not(.is-dev) .dev-only{ display:none !important; }
   transform: scale(1.05);
 }
 
-/* --- Fix tour button visibility --- */
+
 .m4-tour-controls {
   display: none;
   justify-content: center;
@@ -514,7 +525,7 @@ body:not(.is-dev) .dev-only{ display:none !important; }
 }
 
 .m4-preview[hidden] + .m4-tour-controls {
-  display: flex !important; /* Ensure button still shows even if figure is hidden */
+  display: flex !important; 
 }
 
 #map-image, #map-canvas {
@@ -554,22 +565,11 @@ body:not(.is-dev) .dev-only{ display:none !important; }
   visibility: visible !important;
   opacity: 1 !important;
 }
-.m4-tour-controls {
-  transition: opacity 0.3s ease;
-  justify-content: center;
-  align-items: center;
-}
-
-.m4-tour-controls button {
-  cursor: pointer;
-}
-#m4-info-preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  text-align: center;
+#m4-info-preview{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  text-align:center !important;
 }
 
 #m4-info-img {
@@ -580,19 +580,95 @@ body:not(.is-dev) .dev-only{ display:none !important; }
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
-#m4-info-caption {
-  margin-top: 8px;
-  text-align: center;
-  color: #ccc;
-  font-size: 0.9rem;
-  max-width: 85%;
-  line-height: 1.4em;
+#m4-info-caption{
+  width:100% !important;
+  margin:10px 0 10px 0 !important;
+  text-align:center !important;
 }
-#m4-pinlayer {
+
+#m4-btn-auto,
+.m4-tour-controls .m4-tour-btn{
+  padding-top: 10px;
+  margin: 0 !important;                 
+}
+/* --- Tours drawer: docks to the dialog's top-right and fills down --- */
+.m4-dialog { position: relative; } /* ensure positioning context */
+
+.m4-tours-panel{
   position: absolute;
-  top: 0;
-  left: 0;
-  transform: none !important;
+  /* anchored to the right edge of the dialog, just under the header */
+  right: 12px;
+  top: calc(48px + 8px); /* ~ header height + gap; tweak if your header is taller */
+  width: min(340px, 92vw);
+  bottom: 12px;          /* stretch to bottom of dialog */
+  display: flex;
+  flex-direction: column;
+  background: rgba(12,14,20,.98);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.45);
+  z-index: 30;           /* above scene list and map */
+  transform: translateX(8px);
+  opacity: 0;
   pointer-events: none;
-  z-index: 20;
+  transition: transform .18s ease, opacity .18s ease;
+}
+.m4-tours-panel.m4-open{
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.m4-tours-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.m4-tours-head strong{ font:600 14px system-ui, sans-serif; }
+.m4-tours-list{
+  flex: 1;
+  overflow: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+.m4-tour-row{
+  appearance:none; width:100%;
+  padding:.65rem .8rem; border-radius:10px; text-align:left; cursor:pointer;
+  border:1px solid rgba(255,255,255,.18); background:#111827; color:#fff;
+  font:600 13px system-ui; transition: transform .1s ease, background .15s ease, border-color .15s ease;
+  min-height:44px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.m4-tour-row:hover{ background:#162034; transform: translateY(-1px); }
+.m4-tour-title{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* Toggle button look (icon + label) */
+.m4-gbtn.m4-icon-with-label{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 10px; border-radius:8px; cursor:pointer; border:0; background:transparent; color:#fff;
+}
+.m4-gbtn.m4-icon-with-label:hover{ background:rgba(255,255,255,.08); }
+.m4-icon-svg{ width:20px; height:20px; opacity:.95; }
+.m4-icon-label{ font:600 13px/1 system-ui, sans-serif; opacity:.95; white-space:nowrap; }
+@media (max-width: 520px){ .m4-icon-label{ display:none; } }
+
+.m4-tours-empty{
+  opacity:.85; font:600 12px system-ui; padding:8px; text-align:center;
+}
+
+.m4-tour-line {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.m4-tour-title {
+  font-weight: 700;
+}
+
+.m4-tour-est {
+  opacity: .75;
+  font-size: 12px;
+  font-weight: 600;
 }

@@ -59,6 +59,20 @@
   if (bowser.msie && parseFloat(bowser.version) < 11) {
     document.body.classList.add('tooltip-fallback');
   }
+  // Global bridge for labels/compass
+  window.__notifySceneChange = function(idOrScene) {
+    try {
+      var id = idOrScene;
+      if (!id && idOrScene && typeof idOrScene === 'object') {
+        id = (idOrScene.data && idOrScene.data.id) || idOrScene.id || null;
+      }
+      if (!id) return;
+      window.__mapuiCurrentScene = id;
+      window.dispatchEvent(new CustomEvent('__labels_scene_changed', { detail: id }));
+    } catch (e) {
+      console.warn('__notifySceneChange failed', e);
+    }
+  };
 
   // Viewer options.
   var viewerOpts = {
@@ -187,6 +201,7 @@
     scene.scene.switchTo();
     updateSceneName(scene);
     updateSceneList(scene);
+    window.__notifySceneChange(scene);
   }
 
   function updateSceneName(scene) {
@@ -424,19 +439,24 @@
     updateSceneList(sceneObj);
     if (window.mapUISetActive) window.mapUISetActive(sceneObj.data.id);
     if (window.mapuiOnSceneChange) window.mapuiOnSceneChange(sceneObj.data.id);
+    window.__notifySceneChange(sceneObj);
   };
 
   // --- Main teleport method (preferred by MapUI) ---
-  window.switchToScene = function(id, opts) {
-    const scn = window.sceneById && window.sceneById[id];
-    if (scn && typeof scn.switchTo === 'function') {
-      scn.switchTo(Object.assign({ transitionDuration: 800 }, opts));
-      if (window.mapUISetActive) window.mapUISetActive(id);
-      if (window.mapuiOnSceneChange) window.mapuiOnSceneChange(id);
-    } else {
-      console.warn('[MapUI] Scene not found for id:', id);
-    }
-  };
+    window.switchToScene = function(id, opts) {
+      const scn = window.sceneById && window.sceneById[id];
+      if (scn && typeof scn.switchTo === 'function') {
+        scn.switchTo(Object.assign({ transitionDuration: 800 }, opts));
+        if (window.mapUISetActive) window.mapUISetActive(id);
+        if (window.mapuiOnSceneChange) window.mapuiOnSceneChange(id);
+
+        // NEW
+        window.__notifySceneChange(id);
+      } else {
+        console.warn('[MapUI] Scene not found for id:', id);
+      }
+    };
+
 
   initQuickMenuSystem();
 
@@ -740,3 +760,78 @@ window.LabelHUD.setScene = function(id){
   resetChip();
   setTimeout(paint, 60);
 };
+/* ---------- labels scene bridge (arrows + any switch path) ---------- */
+(function labelsSceneBridge() {
+  // One notifier to rule them all
+  function notify(id) {
+    if (!id) return;
+    // Primary hint for labels.js resolver
+    window.__labelsCurrentScene = id;
+    // Keep the legacy hint for any other code
+    window.__mapuiCurrentScene  = id;
+
+    try {
+      window.dispatchEvent(new CustomEvent('labels:scene', { detail: id }));
+      // If labels.js exposed a fast path, use it too (harmless if missing)
+      if (typeof window.__notifySceneChange === 'function') {
+        window.__notifySceneChange(id);
+      }
+    } catch (e) {
+      console.warn('[labels bridge] notify error', e);
+    }
+  }
+
+  // Wrap window.switchToScene(id, opts)
+  if (typeof window.switchToScene === 'function' && !window.switchToScene.__labelsWrapped) {
+    var _origSwitchToScene = window.switchToScene;
+    window.switchToScene = function(id, opts) {
+      var rv = _origSwitchToScene.apply(this, arguments);
+      // Notify now (immediate) and again shortly after transition
+      notify(id);
+      setTimeout(function(){ notify(id); }, 350);
+      return rv;
+    };
+    window.switchToScene.__labelsWrapped = true;
+  }
+
+  // Wrap window.switchScene(sceneObj)
+  if (typeof window.switchScene === 'function' && !window.switchScene.__labelsWrapped) {
+    var _origSwitchScene = window.switchScene;
+    window.switchScene = function(sceneObj) {
+      var id = sceneObj && (sceneObj.id || (sceneObj.data && sceneObj.data.id));
+      var rv = _origSwitchScene.apply(this, arguments);
+      notify(id);
+      setTimeout(function(){ notify(id); }, 350);
+      return rv;
+    };
+    window.switchScene.__labelsWrapped = true;
+  }
+
+  // Last-resort patch: if any code calls scene.switchTo(...) directly
+  try {
+    if (window.sceneById) {
+      Object.keys(window.sceneById).forEach(function(id) {
+        var sc = window.sceneById[id];
+        if (!sc || !sc.switchTo || sc.__labelsPatched) return;
+
+        var orig = sc.switchTo;
+        sc.switchTo = function(opts) {
+          // preserve existing callbacks if present
+          var o = opts || {};
+          var userDone = o.done;
+          o.done = function() {
+            try { notify(id); } catch(_){}
+            if (typeof userDone === 'function') userDone();
+          };
+          var rv = orig.call(this, o);
+          // also notify after a short delay (covers builds without 'done')
+          setTimeout(function(){ notify(id); }, 350);
+          return rv;
+        };
+        sc.__labelsPatched = true;
+      });
+    }
+  } catch (e) {
+    console.warn('[labels bridge] scene patch error', e);
+  }
+})();

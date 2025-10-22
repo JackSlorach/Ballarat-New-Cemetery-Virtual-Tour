@@ -1,310 +1,234 @@
-/* labels/labels.js — Linear compass on top, togglable; chip shows nearest area
-   + scene-wide label support; robust scene-change detection + hysteresis. */
+/* labels/labels.js — Compass + centered chip (area name) under the compass.
+   Robust scene detection; continuous repaint (fresh viewer view each frame).
+   Hysteresis area label: enter 32°, exit 46°. Reads labels/map_labels.json.
+
+   Numbers are displayed with 0° at NORTH even though NORTH is mapped to -90°.
+*/
 (function () {
   'use strict';
 
-  // ---------------- UI scaffold ----------------
-  var hud = document.getElementById('label-hud');
-  if (!hud) { hud = document.createElement('div'); hud.id = 'label-hud'; document.body.appendChild(hud); }
-
-  var compass = document.getElementById('label-compass');
-  if (!compass) { compass = document.createElement('div'); compass.id = 'label-compass'; hud.appendChild(compass); }
-
-  var caret = document.getElementById('comp-caret');
-  if (!caret) { caret = document.createElement('div'); caret.id = 'comp-caret'; compass.appendChild(caret); }
-
-  var ruler = document.getElementById('comp-ruler');
-  if (!ruler) { ruler = document.createElement('div'); ruler.id = 'comp-ruler'; compass.appendChild(ruler); }
-
-  var chip = document.getElementById('label-chip');
-  if (!chip) { chip = document.createElement('div'); chip.id = 'label-chip'; hud.appendChild(chip); }
-
-  // ---------------- Math helpers ----------------
+  // ---------- helpers
   function rad2deg(r){ return r * 180 / Math.PI; }
-  function norm(d){ var x = ((d + 180) % 360 + 360) % 360; return x - 180; }
-  function angDiff(a,b){ return Math.abs(norm(a - b)); }
+  function norm(d){ var x=((d+180)%360+360)%360; return x-180; }
+  function angDiff(a,b){ return Math.abs(norm(a-b)); }
+  function byId(id){ return document.getElementById(id); }
 
-  // ---------------- Config ----------------
-  var SPAN_DEG    = 180;
-  var MAJOR_STEP  = 30;
-  var MINOR_STEP  = 10;
+  // ---------- HUD scaffold
+  var hud = byId('label-hud'); if(!hud){ hud=document.createElement('div'); hud.id='label-hud'; document.body.appendChild(hud); }
+  var compass = byId('label-compass'); if(!compass){ compass=document.createElement('div'); compass.id='label-compass'; hud.appendChild(compass); }
+  var caret = byId('comp-caret'); if(!caret){ caret=document.createElement('div'); caret.id='comp-caret'; compass.appendChild(caret); }
+  var ruler = byId('comp-ruler'); if(!ruler){ ruler=document.createElement('div'); ruler.id='comp-ruler'; compass.appendChild(ruler); }
 
-  // Hysteresis for area labels: show when within 25°, hide after 35°
-  var SHOW_CONE = 25;   // degrees (enter)
-  var HIDE_CONE = 35;   // degrees (exit)
+  // centered CHIP (under the compass)
+  var chip = byId('comp-chip');
+  if (!chip){ chip=document.createElement('div'); chip.id='comp-chip'; hud.appendChild(chip); }
 
-  var CARDINALS = { 0:'N', 90:'E', 180:'S', '-180':'S', '-90':'W' };
+  // ---------- config
+  var SPAN_DEG=180, MAJOR=30, MINOR=10;
+  var SHOW_CONE=32, HIDE_CONE=46;  // hysteresis enter/exit
 
-  // Toggle (persisted) — default OFF
-  var COMPASS_KEY = 'labels_compass_enabled';
-  var compassEnabled = false;
-  try { compassEnabled = (localStorage.getItem(COMPASS_KEY) === '1'); } catch(e){}
-  function applyCompassVisibility(){ compass.classList.toggle('hidden', !compassEnabled); }
-  applyCompassVisibility();
+  // Cardinal mapping used for letters along the bar
+  // NORTH is at -90°, then E at 0°, S at +90°, W at ±180°
+  var CARDINALS = { '-90':'N', 0:'E', 90:'S', 180:'W', '-180':'W' };
+
+  // Where is NORTH in degrees in the above mapping? (used to shift numeric labels)
+  var ZERO_AT_N = (function(){
+    for (var k in CARDINALS) if (CARDINALS[k] === 'N') return parseFloat(k) || 0;
+    return 0;
+  })();
+
+  // Compass toggle (persisted; default OFF) + device rule (mobile/coarse = off)
+  var KEY='labels_compass_enabled', compassOn=false;
+  try { compassOn = (localStorage.getItem(KEY) === '1'); } catch(_){}
+  var media = window.matchMedia('(max-width: 900px), (pointer: coarse)');
+  function compassDisabledForDevice(){ return media && media.matches; }
+  function applyCompass(){
+    var hide = (!compassOn) || compassDisabledForDevice();
+    compass.classList.toggle('hidden', hide);
+    if (hide) chip.classList.remove('visible');
+  }
+  if (media && (media.addEventListener || media.addListener)) {
+    (media.addEventListener || media.addListener).call(media, 'change', applyCompass);
+  }
+  applyCompass();
 
   window.LabelHUD = window.LabelHUD || {};
-  window.LabelHUD.enableCompass = function(on){
-    compassEnabled = !!on;
-    try { localStorage.setItem(COMPASS_KEY, on ? '1' : '0'); } catch(e){}
-    applyCompassVisibility();
-  };
-  window.LabelHUD.toggleCompass = function(){ window.LabelHUD.enableCompass(!compassEnabled); };
-  document.addEventListener('labels:compass:enable', function(e){ window.LabelHUD.enableCompass(!!(e && e.detail)); });
+  window.LabelHUD.enableCompass = function(on){ compassOn=!!on; try{localStorage.setItem(KEY,on?'1':'0');}catch(_){} applyCompass(); };
+  window.LabelHUD.toggleCompass  = function(){ window.LabelHUD.enableCompass(!compassOn); };
 
-  // ---------------- Data ----------------
-  // db: sceneId -> { north:Number, areas:[{name,yaw,pitch}], sceneWide:String|null }
-  var db = {};
-  var loaded = false;
+  // ---------- data
+  var db={}, loaded=false;
 
-  // Track current/previous scene ids for reset
-  var currentSceneId = null;
-  var prevSceneId = null;
+  // ---------- state
+  var lastShift=NaN, lastScene=null, lastArea=null;
 
-  // ---------------- Ruler ----------------
-  function makeRuler(widthPx){
-    while (ruler.firstChild) ruler.removeChild(ruler.firstChild);
-    var pxPerDeg = widthPx / SPAN_DEG;
-    var START = -540, END = 540;
-    for (var d = START; d <= END; d += MINOR_STEP) {
-      var x = Math.round(widthPx/2 + d * pxPerDeg);
-      var isMajor = (d % MAJOR_STEP === 0);
-      var isCard  = (d % 90 === 0);
+  // ---------- ruler (numbers show 0 at NORTH)
+    function buildRuler(W){
+      while (ruler.firstChild) ruler.removeChild(ruler.firstChild);
 
-      var tick = document.createElement('div');
-      tick.className = 'tick ' + (isCard ? 'cardinal' : (isMajor ? 'major' : 'minor'));
-      tick.style.left = x + 'px';
-      ruler.appendChild(tick);
+      var pxPerDeg = W / SPAN_DEG;
 
-      if (isCard) {
-        var lblC = document.createElement('div');
-        lblC.className = 'tick-label tick-cardinal-label';
-        var nd = String(norm(d));
-        var card = CARDINALS.hasOwnProperty(nd) ? CARDINALS[nd] : CARDINALS[String(((d%360)+360)%360)];
-        lblC.textContent = card || '';
-        lblC.style.left = x + 'px';
-        ruler.appendChild(lblC);
-      } else if (isMajor) {
-        var lbl = document.createElement('div');
-        lbl.className = 'tick-label';
-        var val = ((d % 360) + 360) % 360;
-        lbl.textContent = String(val);
-        lbl.style.left = x + 'px';
-        ruler.appendChild(lbl);
-      }
-    }
-  }
+      for (var d = -540; d <= 540; d += MINOR) {
+        var x       = Math.round(W/2 + d * pxPerDeg);
+        var isMajor = (d % MAJOR === 0);
+        var isCard  = (d % 90 === 0);
 
-  // ---------------- Chip ----------------
-  var lastChipText = null;
-  function resetChip(){ lastChipText = null; chip.textContent = ''; chip.classList.remove('visible'); chip.classList.remove('scene-wide'); }
-  function showChip(text, mode){
-    var t = (text || '').replace(/^\s+|\s+$/g,'');
-    if (!t) { resetChip(); return; }
-    chip.classList.toggle('scene-wide', mode === 'wide');
-    if (t !== lastChipText) {
-      chip.textContent = t;
-      chip.classList.add('visible');
-      lastChipText = t;
-    }
-  }
+        // tick line
+        var t = document.createElement('div');
+        t.className = 'tick ' + (isCard ? 'cardinal' : (isMajor ? 'major' : 'minor'));
+        t.style.left = x + 'px';
+        ruler.appendChild(t);
 
-  // ---------------- Scene & yaw helpers ----------------
-  function domCurrentSceneId(){
-    try {
-      var el = document.querySelector('#sceneList .scene.current');
-      if (el && el.getAttribute) return el.getAttribute('data-id') || null;
-    } catch(e){}
-    return null;
-  }
-
-  function resolveCurrentSceneId(){
-    // Priority: DOM “current” marker → our tracked id
-    return domCurrentSceneId() || currentSceneId || null;
-  }
-
-  function getYawDeg(){
-    try {
-      if (!window.viewer || !window.viewer.view) return null;
-      var v = window.viewer.view();
-      if (!v) return null;
-      if (typeof v.yaw === 'function') return rad2deg(v.yaw());
-      if (typeof v.parameters === 'function') {
-        var p = v.parameters({});
-        if (p && typeof p.yaw === 'number') return rad2deg(p.yaw);
-      }
-    } catch (e) {}
-    return null;
-  }
-
-  // Return best area + its angular delta (single definition)
-  function nearestArea(sceneId, yawDeg){
-    var entry = db[sceneId];
-    if (!entry || !entry.areas || !entry.areas.length) return null;
-    var best = null, bestD = 9999;
-    for (var i=0; i<entry.areas.length; i++) {
-      var a = entry.areas[i];
-      var d = angDiff(yawDeg, Number(a.yaw) || 0);
-      if (d < bestD) { bestD = d; best = a; }
-    }
-    return best ? { area: best, delta: bestD } : null;
-  }
-
-  function hotspotText(){
-    try {
-      var list = document.querySelectorAll('.info-hotspot');
-      if (!list || !list.length) return null;
-
-      var cx0 = window.innerWidth  / 2;
-      var cy0 = window.innerHeight / 2;
-      var closeLim = Math.min(window.innerWidth, window.innerHeight) * 0.14; // ~14%
-
-      var i, closest=null, best=1e9;
-      for (i=0; i<list.length; i++) {
-        var hs = list[i];
-        var r = hs.getBoundingClientRect();
-        // ignore if mostly off-screen
-        if (r.bottom < 0 || r.top > window.innerHeight || r.right < 0 || r.left > window.innerWidth) continue;
-
-        var cx = r.left + r.width/2;
-        var cy = r.top  + r.height/2;
-        var d = Math.hypot(cx - cx0, cy - cy0);
-        if (d < best) { best = d; closest = hs; }
-      }
-      if (best <= closeLim && closest) {
-        var t = closest.querySelector('.info-hotspot-title');
-        var txt = t ? t.textContent.replace(/^\s+|\s+$/g,'') : '';
-        return txt || null;
-      }
-    } catch (e) {}
-    return null;
-  }
-
-  // ---------------- Paint ----------------
-  var lastShift = NaN;
-
-  function paint(){
-    if (!loaded) { resetChip(); return; }
-
-    var sceneId = resolveCurrentSceneId();
-    if (!sceneId) { resetChip(); return; }
-
-    // If scene changed since last frame, clear chip to avoid “stickiness”
-    if (prevSceneId !== sceneId) { resetChip(); prevSceneId = sceneId; }
-
-    var entry = db[sceneId];
-    var yawAbs = getYawDeg();
-
-    // Scene-wide label → always show
-    if (entry && entry.sceneWide) {
-      showChip(entry.sceneWide, 'wide');
-    } else {
-      // hotspot override > nearest area (with hysteresis)
-      var hs = hotspotText();
-      if (hs) {
-        showChip(hs);
-      } else if (entry && yawAbs != null) {
-        var res = nearestArea(sceneId, yawAbs); // {area, delta}
-        if (!res) {
-          resetChip();
-        } else {
-          var isSame = (lastChipText === res.area.name);
-          var lim = isSame ? HIDE_CONE : SHOW_CONE;
-          if (res.delta <= lim) showChip(res.area.name);
-          else resetChip();
+        // label: if cardinal, show letter only; otherwise (major) show degree number (0 at N)
+        if (isCard) {
+          var c = document.createElement('div');
+          c.className = 'tick-label tick-cardinal-label';
+          var nd  = String(norm(d));
+          var lab = CARDINALS.hasOwnProperty(nd) ? CARDINALS[nd]
+                                                : CARDINALS[String(((d%360)+360)%360)];
+          c.textContent = lab || '';
+          c.style.left  = x + 'px';
+          ruler.appendChild(c);
+          // NOTE: no numeric label under cardinals (N/E/S/W)
+        } else if (isMajor) {
+          var val = ((d - ZERO_AT_N) % 360 + 360) % 360; // 0..359 with 0 at North
+          var l = document.createElement('div');
+          l.className = 'tick-label';
+          l.textContent = String(val);
+          l.style.left  = x + 'px';
+          ruler.appendChild(l);
         }
-      } else {
-        resetChip();
       }
     }
 
-    // Compass
-    if (!compassEnabled || !compass.clientWidth) return;
-    var W = compass.clientWidth;
-    var pxPerDeg = W / SPAN_DEG;
+  // ---------- scene + view resolvers (fresh each frame)
+  function currentSceneId(){
+    if (window.__labelsCurrentScene) return window.__labelsCurrentScene; // hint, set by notifiers
+    try {
+      if (window.currentScene)
+        return window.currentScene.id ||
+               (window.currentScene.data && window.currentScene.data.id) || null;
+    } catch(_){}
+    try {
+      var el=document.querySelector('#sceneList .scene.current');
+      if (el){ var id=el.getAttribute('data-id'); if (id) return id; }
+    } catch(_){}
+    if (window.CURRENT_SCENE_ID)    return window.CURRENT_SCENE_ID;
+    if (window.__mapuiCurrentScene) return window.__mapuiCurrentScene;
+    return lastScene;
+  }
 
-    var initW = ruler.getAttribute('data-init-width');
-    if (!initW || Number(initW) !== W) {
-      makeRuler(W);
-      ruler.setAttribute('data-init-width', String(W));
-      lastShift = NaN;
+  // Always use the viewer's live camera view; avoids stale scene views.
+  function freshView(){
+    try { if (window.viewer && typeof window.viewer.view === 'function') return window.viewer.view(); } catch(_){}
+    return null;
+  }
+  function yawDegFromView(v){
+    try{
+      if(!v) return null;
+      if (typeof v.yaw==='function') return rad2deg(v.yaw());
+      if (typeof v.parameters==='function'){ var p=v.parameters({}); if(p && typeof p.yaw==='number') return rad2deg(p.yaw); }
+    }catch(_){}
+    return null;
+  }
+
+  // ---------- nearest area (with hysteresis)
+  function nearestAreaName(sceneId, yaw){
+    var e=db[sceneId]; if(!e||!e.areas||!e.areas.length) return null;
+    var best=null, bestD=9e9;
+    for(var i=0;i<e.areas.length;i++){
+      var a=e.areas[i], d=angDiff(yaw, Number(a.yaw)||0);
+      if (d<bestD){bestD=d; best=a;}
     }
+    if(!best) return null;
+    var lim=(lastArea===best.name)?HIDE_CONE:SHOW_CONE;
+    return (bestD<=lim)?best.name:null;
+  }
 
-    if (entry && yawAbs != null) {
-      var local = norm(yawAbs - (Number(entry.north) || 0));
-      var offsetPx = local * pxPerDeg;
-      var shift = Math.round(W/2 - offsetPx);
-      if (shift !== lastShift) {
-        ruler.style.transform = 'translateX(' + shift + 'px)';
-        lastShift = shift;
+  // ---------- chip helpers
+  function hideChip(){ chip.classList.remove('visible'); chip.textContent=''; lastArea=null; }
+  function showChipText(s){ if(!s){ hideChip(); return; } if(s!==chip.textContent){ chip.textContent=s; } chip.classList.add('visible'); lastArea=s; }
+
+  // ---------- paint
+  function paint(sid){
+    var e=db[sid]; if(!e){ hideChip(); e={north:0,areas:[]}; }
+
+    var v=freshView(), yaw=yawDegFromView(v);
+    if (yaw==null){
+      hideChip();
+      if (compassOn && compass.clientWidth) {
+        var W=compass.clientWidth, iw=ruler.getAttribute('data-init-width');
+        if (!iw || Number(iw)!==W){ buildRuler(W); ruler.setAttribute('data-init-width', String(W)); lastShift=NaN; }
+        if (lastShift !== 0) { ruler.style.transform='translateX(0px)'; lastShift=0; }
       }
+      return;
     }
+
+    // chip (unless scene-wide label is defined — then you can use your own static UI)
+    if (e.sceneWideLabel || e.sceneWide){ hideChip(); }
+    else { showChipText(nearestAreaName(sid, yaw)); }
+
+    if (!compassOn || !compass.clientWidth) return;
+    var W=compass.clientWidth, pxPerDeg=W/SPAN_DEG;
+    var initW=ruler.getAttribute('data-init-width');
+    if (!initW || Number(initW)!==W){ buildRuler(W); ruler.setAttribute('data-init-width', String(W)); lastShift=NaN; }
+    var local=norm(yaw - (Number(e.north)||0));
+    var shift=Math.round(W/2 - local*pxPerDeg);
+    if (shift!==lastShift){ ruler.style.transform='translateX('+shift+'px)'; lastShift=shift; }
   }
 
-  // ---------------- Load labels JSON ----------------
-  fetch('labels/map_labels.json', { cache: 'no-store' })
-    .then(function (r){ if (!r.ok) throw new Error('labels JSON not found'); return r.json(); })
-    .then(function (j){
-      var map = {};
-      var scenes = j && j.scenes ? j.scenes : [];
-      for (var i=0; i<scenes.length; i++) {
-        var s = scenes[i];
-        if (!s || !s.sceneId) continue;
-        map[s.sceneId] = {
-          north: Number(s.north) || 0,
-          areas: Array.isArray(s.areas) ? s.areas.slice() : [],
-          sceneWide: s.sceneWideLabel ? String(s.sceneWideLabel) : null
-        };
-      }
-      db = map;
-      loaded = true;
-      paint();
-    })
-    .catch(function (e){ console.warn('[labels] load failed:', e); });
-
-  // ---------------- Hook scene switches (BOTH forms) ----------------
-  // 1) switchToScene(id, opts)
-  if (typeof window.switchToScene === 'function') {
-    var _origSwitchToScene = window.switchToScene;
-    window.switchToScene = function(id, opts){
-      currentSceneId = id || null;
-      resetChip();
-      var rv = _origSwitchToScene.apply(this, arguments);
-      setTimeout(paint, 120);
-      return rv;
-    };
-  }
-  // 2) switchScene(sceneObj)
-  if (typeof window.switchScene === 'function') {
-    var _origSwitchScene = window.switchScene;
-    window.switchScene = function(sceneObj){
-      var id = (sceneObj && sceneObj.data && sceneObj.data.id) || (sceneObj && sceneObj.id) || null;
-      currentSceneId = id;
-      resetChip();
-      var rv = _origSwitchScene.apply(this, arguments);
-      setTimeout(paint, 120);
-      return rv;
-    };
-  }
-
-  // Fallback: when the scene list marks a new item as .current
-  try {
-    var list = document.getElementById('sceneList');
-    if (list && window.MutationObserver) {
-      var obs = new MutationObserver(function(){ setTimeout(paint, 60); });
-      obs.observe(list, { attributes:true, childList:true, subtree:true });
-    }
-  } catch(e){}
-
-  // Animation loop
-  var last = 0;
+  // ---------- loop (~12fps)
+  var lastTick=0;
   function loop(ts){
-    if (window.viewer && ts - last > 80) { paint(); last = ts; }
-    window.requestAnimationFrame(loop);
+    if(!loaded){ requestAnimationFrame(loop); return; }
+    if (!lastTick || ts-lastTick>80){
+      var sid=currentSceneId();
+      if (sid){
+        if (sid!==lastScene){ lastScene=sid; hideChip(); ruler.removeAttribute('data-init-width'); lastShift=NaN; }
+        paint(sid);
+      } else { hideChip(); }
+      lastTick=ts;
+    }
+    requestAnimationFrame(loop);
   }
-  window.requestAnimationFrame(loop);
 
-  window.addEventListener('resize', function(){
-    ruler.removeAttribute('data-init-width');
-    paint();
+  // ---------- load JSON
+  function loadLabels(){
+    return fetch('./labels/map_labels.json?cb='+Date.now(), {cache:'no-store'})
+      .then(function(r){ return r.ok?r.json():{scenes:[]}; })
+      .then(function(j){
+        db={};
+        var arr=j&&j.scenes?j.scenes:[];
+        for (var i=0;i<arr.length;i++){
+          var s=arr[i]; if(!s||!s.sceneId) continue;
+          db[s.sceneId]={
+            north:Number(s.north)||0,
+            areas:Array.isArray(s.areas)?s.areas.slice():[],
+            sceneWideLabel: s.sceneWideLabel?String(s.sceneWideLabel):null,
+            sceneWide: s.sceneWideLabel?String(s.sceneWideLabel):null
+          };
+        }
+        loaded=true;
+      })
+      .catch(function(e){ console.warn('[labels] load failed', e); db={}; loaded=true; });
+  }
+
+  // Fast-track repaints when the app announces a scene
+  window.addEventListener('labels:scene', function (e) {
+    var id = e && e.detail; if (!id) return;
+    window.__labelsCurrentScene = id;
+    try { ruler.removeAttribute('data-init-width'); } catch(_){}
+    hideChip();
+    try { requestAnimationFrame(function(){ paint(id); }); } catch(_){}
   });
+
+  // Optional helper your code can call on any scene switch
+  window.__notifySceneChange = function(id){
+    window.__labelsCurrentScene = id || null;
+    hideChip(); ruler.removeAttribute('data-init-width'); lastShift=NaN;
+  };
+
+  // init
+  loadLabels().then(function(){ requestAnimationFrame(loop); });
+  window.addEventListener('resize', function(){ ruler.removeAttribute('data-init-width'); });
 })();

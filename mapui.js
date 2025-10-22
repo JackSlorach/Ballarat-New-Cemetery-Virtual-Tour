@@ -139,10 +139,27 @@ function highlightActivePin(sceneId) {
     }
   });
 }
+// --- add near the top of mapui.js (or above safeSwitchToScene) ---
+function notifyLabelsScene(id) {
+  // Canonical source of truth for labels.js
+  window.__labelsCurrentScene = id;
+  // keep your old hint too, if other code uses it
+  window.__mapuiCurrentScene  = id;
+
+  // labels.js will listen for this and repaint immediately
+  try {
+    if (typeof window.__notifySceneChange === 'function') {
+      window.__notifySceneChange(id); // optional fast path
+    }
+    window.dispatchEvent(new CustomEvent('labels:scene', { detail: id }));
+  } catch (_) {}
+}
+
+
 
 function pinDisplayName(pin){ return pin?.dataset.displayName?.trim() || pin?.dataset.sceneId || ''; }
 function applyPinTitleTooltip(pin){
-  // Native tooltip; shows on hover
+
   pin.title = pinDisplayName(pin);
 }
 
@@ -154,27 +171,46 @@ function hideNativeSceneList(){
   if (native) native.style.display = 'none';
 }
 
-function safeSwitchToScene(id) {
+function safeSwitchToScene(id){
   try {
-    window.resetMapFocus();
+    resetMapFocus();
+
+    // 1) Your wrapper function path
     if (typeof window.switchToScene === 'function') {
-      window.switchToScene(id);
+      const rv = window.switchToScene(id);
+      // Switchers vary; notify immediately and again after the transition.
+      notifyLabelsScene(id);
+      setTimeout(() => notifyLabelsScene(id), 350);
       return true;
     }
+
+    // 2) Direct scene object path
     if (window.sceneById && window.sceneById[id] && typeof window.sceneById[id].switchTo === 'function') {
-      window.sceneById[id].switchTo({ transitionDuration: 800 });
+      // Prefer Marzipano done-callback if supported
+      const opts = { transitionDuration: 800, done: () => notifyLabelsScene(id) };
+      try { window.sceneById[id].switchTo(opts); }
+      catch { window.sceneById[id].switchTo({ transitionDuration: 800 }); setTimeout(() => notifyLabelsScene(id), 350); }
       return true;
     }
+
+    // 3) Finder path
     if (typeof window.findSceneById === 'function' && typeof window.switchScene === 'function') {
       const scnObj = window.findSceneById(id);
-      if (scnObj) { window.switchScene(scnObj); return true; }
+      if (scnObj) {
+        window.switchScene(scnObj);
+        notifyLabelsScene(id);
+        setTimeout(() => notifyLabelsScene(id), 350);
+        return true;
+      }
     }
-  } catch (e) {
-    console.warn('[MapUI] switch error', e);
-  }
+  } catch(e){ console.warn('[MapUI] switch error', e); }
+
   console.warn('[MapUI] No way to switch scene for id:', id);
   return false;
 }
+
+
+
 
 
 async function loadConfigFromUrl(url) {
@@ -306,33 +342,6 @@ function collectScenesWithWait(){
   });
 }
 
-
-
-
-
-function openMenu() {
-  el.backdrop?.setAttribute('aria-hidden', 'false');
-  // Wait until after CSS/display updates
-  setTimeout(() => {
-    if (window.Z) {
-      window.Z.scale = 1;
-      window.Z.tx = 0;
-      window.Z.ty = 0;
-    }
-    const stage = document.querySelector('.m4-zoomstage');
-    const pinLayer = document.getElementById('m4-pinlayer');
-    if (stage) stage.style.transform = 'translate(0, 0) scale(1)';
-    if (pinLayer) pinLayer.style.transform = 'translate(0, 0)';
-    if (typeof window.syncPinLayerToImage === 'function')
-      window.syncPinLayerToImage();
-  }, 200);
-}
-
-function closeMenu() {
-  el.backdrop?.setAttribute('aria-hidden', 'true');
-  window.resetMapFocus();
-}
-
 el.toggle?.addEventListener('click',openMenu);
 el.close?.addEventListener('click', closeMenu);
 el.backdrop?.addEventListener('click', (e)=>{ if (e.target === el.backdrop) closeMenu(); });
@@ -341,44 +350,34 @@ el.backdrop?.addEventListener('click', (e)=>{ if (e.target === el.backdrop) clos
 // Keeps the absolute overlay (pin layer) perfectly aligned to the map image.
 // Safe to call often; it just reads layout and sets size/position.
 function syncPinLayerToImage() {
-  if (!el || !el.img || !el.pinLayer) return;
-
-  const img   = el.img;
+  const stage = el.img?.parentElement;     // .m4-mapstage
   const layer = el.pinLayer;
+  const img   = el.img;
+  if (!stage || !layer || !img) return;
 
-  // Parent that contains BOTH the image and the pin layer
-  const parent = layer.parentElement || img.parentElement;
-  if (!parent) return;
+  const sw = stage.clientWidth;
+  const sh = stage.clientHeight;
 
-  const ir = img.getBoundingClientRect();
-  const pr = parent.getBoundingClientRect();
+  const iw = img.naturalWidth  || img.width  || 0;
+  const ih = img.naturalHeight || img.height || 0;
+  if (!iw || !ih || !sw || !sh) return;
 
-  // Position the layer exactly over the image
-  const dx = Math.round(ir.left - pr.left);
-  const dy = Math.round(ir.top  - pr.top);
+  // Compute the letterboxed rectangle for object-fit: contain
+  const scale = Math.min(sw / iw, sh / ih);
+  const rw = Math.round(iw * scale);
+  const rh = Math.round(ih * scale);
+  const left = Math.round((sw - rw) / 2);
+  const top  = Math.round((sh - rh) / 2);
 
-  // Ensure the layer sits on top of the image
-  parent.style.position = parent.style.position || 'relative';
-  layer.style.position  = 'absolute';
-  layer.style.pointerEvents = 'none';
-
-  layer.style.transform = 'translate(0, 0)';
-  layer.style.left = dx + 'px';
-  layer.style.top  = dy + 'px';
-
-  layer.style.width  = Math.round(ir.width)  + 'px';
-  layer.style.height = Math.round(ir.height) + 'px';
-
-  // Pins are already stored as %; ensure they keep % positioning
-  // (No recalculation needed—just make sure left/top are %)
-  layer.querySelectorAll('.m4-pin').forEach(p => {
-    if (p.style.left.indexOf('%') === -1 && p.dataset.x) p.style.left = `${p.dataset.x}%`;
-    if (p.style.top.indexOf('%')  === -1 && p.dataset.y) p.style.top  = `${p.dataset.y}%`;
-  });
+  // Place & size the pin layer to match the visible image area
+  layer.style.left   = left + 'px';
+  layer.style.top    = top  + 'px';
+  layer.style.width  = rw   + 'px';
+  layer.style.height = rh   + 'px';
 }
 
-el.img?.addEventListener('load', syncPinLayerToImage);
-window.addEventListener('resize', syncPinLayerToImage);
+
+
 
 
 function groupScenesDefault(arr){
@@ -469,39 +468,21 @@ function loadLocal(){
 }
 function saveLocal() {
   try {
-    // --- Clone current pins to avoid mutating live array ---
-    const pinsClean = pins.map(p => {
-      const copy = { ...p };
+    //Prevent saving when the map is transformed (focused)
+    const stage = document.querySelector('.m4-zoomstage') || document.getElementById('m4-stage');
+    const transform = stage?.style.transform || '';
+    if (transform.includes('scale(') && !window.__allowSaveWhileZoomed) {
+      console.warn('[MapUI] Skipped saveLocal due to active zoom transform.');
+      return;
+    }
 
-      // Normalize coordinates if the map is zoomed or panned
-      if (window.Z) {
-        const scale = window.Z.scale || 1;
-        const tx = window.Z.tx || 0;
-        const ty = window.Z.ty || 0;
-
-        if (scale !== 1 || tx !== 0 || ty !== 0) {
-          const imgW = el.img?.offsetWidth || 1000;
-          const imgH = el.img?.offsetHeight || 1000;
-
-          // Remove translation and scale offset (convert back to base percentages)
-          copy.x = ((p.x / 100) - (tx / imgW)) * (100 / scale);
-          copy.y = ((p.y / 100) - (ty / imgH)) * (100 / scale);
-        }
-      }
-
-      // Round values slightly for cleaner saves
-      copy.x = Math.round(copy.x * 1000) / 1000;
-      copy.y = Math.round(copy.y * 1000) / 1000;
-      return copy;
-    });
-
-    // --- Save normalized map state ---
-    const cfg = { list: listState, pins: pinsClean };
+    const cfg = { list: listState, pins: pins };
     localStorage.setItem('map_config_combined', JSON.stringify(cfg, null, 2));
   } catch (e) {
     console.error('saveLocal failed:', e);
   }
 }
+
 
 
 function saveLocalFromState() {
@@ -1189,6 +1170,14 @@ function updateInfoPreview(title, text, imageFile, sizePct) {
   const cap = document.getElementById('m4-info-caption');
   const tourBox = document.getElementById('m4-tour-btn-container');
   const autoBtn = document.getElementById('m4-btn-auto');
+  // --- Ensure the Start Tour button lives inside the preview (under the caption) ---
+  const preview = document.getElementById('m4-info-preview');
+  if (preview && tourBox && !preview.contains(tourBox)) {
+    preview.appendChild(tourBox);
+  }
+  // Hard reset any old overlay styles so CSS can position it
+  ['position','top','right','bottom','left','transform'].forEach(p => tourBox.style[p] = '');
+
   if (!box || !img || !cap || !tourBox) return;
 
   // Caption + image update
@@ -1425,35 +1414,47 @@ document.addEventListener('scene:change', restorePinsAfterTour);
     if (typeof highlightActiveRow === 'function') highlightActiveRow(sceneId);
     if (typeof highlightActivePin === 'function') highlightActivePin(sceneId);
   };
-  // --- Full reset for map stage and pin layer ---
+  // --- Hard reset / re-init helpers (no pin coordinates are changed) ---
   window.resetMapFocus = function resetMapFocus() {
+    // identity transform for stage + pin layer
     const stage = document.querySelector('.m4-zoomstage') || document.getElementById('m4-stage');
-    const pinLayer = el.pinLayer || document.querySelector('.m4-pinlayer');
-    if (!stage) return;
+    const layer = document.getElementById('m4-pinlayer');
+    if (window.Z) { Z.scale = 1; Z.tx = 0; Z.ty = 0; }
+    if (stage) { stage.style.transition = ''; stage.style.transform = 'translate(0px, 0px) scale(1)'; }
+    if (layer) { layer.style.transform = 'translate(0px, 0px)'; }
 
-    // Reset both transforms with transition
-    [stage, pinLayer].forEach(layer => {
-      if (!layer) return;
-      layer.style.transition = 'transform 0.25s ease';
-      layer.style.transform = 'translate(0px, 0px) scale(1)';
-      setTimeout(() => { layer.style.transition = ''; }, 300);
-    });
-
-    // Reset zoom state
-    if (window.Z) {
-      Z.scale = 1;
-      Z.tx = 0;
-      Z.ty = 0;
-    }
-
-    // Re-sync pins to image after reset
-    if (typeof window.syncPinLayerToImage === 'function') {
-      setTimeout(() => window.syncPinLayerToImage(), 250);
-    }
-
-    // Clear focus marker
+    // clear any “focused” flag / locks
     window.__mapWasFocused = false;
+    window.__mapLocked = false;
+    document.body.classList.remove('map-locked');
+    if (el.mapwrap) {
+      el.mapwrap.style.touchAction = '';
+      el.mapwrap.style.pointerEvents = '';
+    }
   };
+
+  window.tearDownMapUI = function tearDownMapUI() {
+    // Don’t touch pin % positions – just clear runtime transforms
+    resetMapFocus();
+
+    // Remove dimensions/offset we set at runtime so next init re-measures
+    const layer = document.getElementById('m4-pinlayer');
+    if (layer) {
+      layer.style.left = '';
+      layer.style.top = '';
+      layer.style.width = '';
+      layer.style.height = '';
+    }
+  };
+
+  window.initMapUI = function initMapUI() {
+    // Re-sync overlay box to the image each time we open
+    if (typeof window.syncPinLayerToImage === 'function') syncPinLayerToImage();
+
+    // If your list is dynamic, re-render once (safe no-op if it already exists)
+    if (typeof window.buildSceneList === 'function') buildSceneList();
+  };
+
 
 
 })();
@@ -1594,39 +1595,35 @@ function initPinSyncObservers() {
   });
 }
 
-// Feature: open menu and ensure map pins resync correctly (fullscreen + normal mode)
-function openMenu(sceneId) {
-  // Reveal the map overlay / backdrop
-  el.backdrop?.setAttribute('aria-hidden', 'false');
+// when the image loads (or changes on scene switch)
+el.img?.addEventListener('load', () => {
+  syncPinLayerToImage();
+  setTimeout(syncPinLayerToImage, 50);   // second pass for late layout
+});
 
-  // Determine current scene and group
-  const activeId = sceneId || window.__mapuiCurrentScene || null;
-  const targetGroup = activeId ? groupKeyOfScene(activeId) : null;
-
-  // Collapse other groups, open relevant one, highlight active row
-  requestAnimationFrame(() => {
-    collapseAllGroupsAndOpen(targetGroup);
-
-    if (activeId && typeof highlightActiveRow === 'function') {
-      highlightActiveRow(activeId);
-    }
-
-    // --- Immediate pin alignment ---
-    if (typeof syncPinLayerToImage === 'function') {
-      syncPinLayerToImage();
-    }
-
-    // --- Progressive re-sync passes ---
-    // These catch late fullscreen reflows (browser-dependent)
-    const reflows = [120, 300, 600];
-    reflows.forEach(delay => {
-      setTimeout(() => {
-        if (typeof syncPinLayerToImage === 'function') syncPinLayerToImage();
-        if (typeof syncPinsSoon === 'function') syncPinsSoon();
-      }, delay);
-    });
-  });
+// when the menu opens (after it’s visible)
+function openMenu(){
+  el.backdrop?.setAttribute('aria-hidden','false');
+  requestAnimationFrame(syncPinLayerToImage);
+  setTimeout(syncPinLayerToImage, 50);
 }
+
+// on resize / fullscreen / orientation (wherever you handle those)
+window.addEventListener('resize', syncPinLayerToImage);
+document.addEventListener('fullscreenchange', syncPinLayerToImage);
+
+// after scene change (once the new map image is in the DOM)
+window.addEventListener('scenechange', () => {
+  syncPinLayerToImage();
+  setTimeout(syncPinLayerToImage, 50);
+});
+
+
+function closeMenu() {
+  el.backdrop?.setAttribute('aria-hidden', 'true');
+  tearDownMapUI();         // clear transforms & runtime sizing so nothing persists
+}
+
 
 function collapseAllGroupsAndOpen(targetGroupKey){
   const wraps = el.scenes?.querySelectorAll('li.group-li') || [];
@@ -1920,62 +1917,7 @@ function centerHome(){
 const MAP_TRANSITION_MS = 350; // adjust to 500 for slower movement
 let mapLocked = false;
 
-function focusHotspot(sceneId) {
-  const pin = findPinByScene(sceneId);
-  if (!pin || !el.mapwrap) return;
 
-  let xp = parseFloat(pin.dataset.x);
-  let yp = parseFloat(pin.dataset.y);
-  if (isNaN(xp)) xp = parseFloat((pin.style.left || '0').replace('%', ''));
-  if (isNaN(yp)) yp = parseFloat((pin.style.top || '0').replace('%', ''));
-
-  const stage = document.querySelector('.m4-zoomstage') || el.pinLayer?.parentElement || el.pinLayer;
-  if (!stage) return;
-
-  const baseW = stage.offsetWidth || el.img?.naturalWidth || 1000;
-  const baseH = stage.offsetHeight || el.img?.naturalHeight || 600;
-
-  const px = (xp / 100) * baseW;
-  const py = (yp / 100) * baseH;
-
-  const vp = el.mapwrap.getBoundingClientRect();
-  const cx = vp.width / 2;
-  const cy = vp.height / 2;
-
-  // Smoothly zoom to the hotspot
-  const targetScale = Math.max(2, Z.scale < 1.5 ? 2 : Z.scale);
-  Z.scale = Math.min(Z.max, Math.max(Z.min, targetScale));
-
-  Z.tx = Math.round(cx - px * Z.scale);
-  Z.ty = Math.round(cy - py * Z.scale);
-
-  if (typeof applyZoom === 'function') applyZoom();
-  else if (typeof applyTransform === 'function') applyTransform();
-  else {
-    const s = document.querySelector('.m4-zoomstage');
-    if (s) s.style.transform = `translate(${Z.tx}px, ${Z.ty}px) scale(${Z.scale})`;
-  }
-
-  // 🔒 Lock all gestures (non-dev mode only)
-  if (!DEV_MODE) {
-    window.__mapLocked = true; // global flag
-    el.mapwrap.style.touchAction = 'none';
-    el.mapwrap.style.pointerEvents = 'none';
-
-    // disable wheel zoom & drag handlers if defined
-    if (window.Z && typeof Z.enablePanZoom !== 'undefined') Z.enablePanZoom = false;
-    document.body.classList.add('map-locked');
-  }
-if (typeof applyZoom === 'function') applyZoom();
-
-// Lock the map after focusing
-lockMapInteraction(true);
-
-// Visual feedback
-pin.classList.remove('m4-pulse'); void pin.offsetWidth; pin.classList.add('m4-pulse');
-highlightActiveRow(sceneId);
-highlightActivePin(sceneId);
-}
 
 function lockMapInteraction(lock = true) {
   const stage = document.querySelector('.m4-zoomstage') || el.mapwrap;
@@ -2196,3 +2138,200 @@ function toast(message, ok = true) {
     }
   });
 });
+// prevent accidental drift saves
+window.addEventListener('beforeunload', () => {
+  window.__allowSaveWhileZoomed = false;
+});
+(function () {
+  const $ = (sel, root = document) => root.querySelector(sel);
+
+  // ---------- tiny helpers ----------
+  const secondsToLabel = (s) => (s < 90 ? `${Math.round(s)}s` : `${Math.round(s / 60)} min`);
+  const perHopMs = (dur) => (dur && Number.isFinite(+dur) ? +dur : 6000) / 4; // same logic as AutoTour
+
+  // Suppress "Blocked aria-hidden…" by blurring if focus sits inside the element we are hiding
+  function safeHideAria(el){
+    if (!el) return;
+    if (el.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
+    el.setAttribute('aria-hidden','true');
+  }
+
+  // ---------- load list from manifest then enrich with ETA ----------
+  async function fetchCatalog() {
+    const res = await fetch('tour/tours/index.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('Missing tour/tours/index.json');
+
+    const raw = await res.json();
+    const items = Array.isArray(raw) ? raw : (Array.isArray(raw.tours) ? raw.tours : []);
+    // Normalize { file, title }
+    const normalized = items.map(t => ({
+      file: t.file || t.path || '',
+      title: t.displayName || t.name || (t.file ? t.file.replace(/\.json$/i,'') : 'Untitled')
+    })).filter(t => t.file);
+
+    // Pull each tour JSON so we can compute ETA
+    const enriched = await Promise.all(normalized.map(async (t) => {
+      try {
+        const tj = await fetch(`tour/tours/${t.file}`, { cache: 'no-store' }).then(r => r.json());
+        const scenes = Array.isArray(tj.waypoints) ? tj.waypoints.length
+                     : Array.isArray(tj.scenes)    ? tj.scenes.length : 0;
+        const hop = perHopMs(tj.duration);
+        const seconds = scenes * (hop / 1000);
+        return { ...t, etaSeconds: seconds, scenes };
+      } catch {
+        return { ...t, etaSeconds: 0, scenes: 0 };
+      }
+    }));
+
+    return enriched;
+  }
+
+  async function renderList() {
+    const list = $('#m4-tours-list');
+    if (!list) return;
+    list.innerHTML = '<div class="m4-tours-empty">Loading…</div>';
+
+    try {
+      const items = await fetchCatalog();
+      if (!items.length) {
+        list.innerHTML = '<div class="m4-tours-empty">No tours found.</div>';
+        return;
+      }
+
+      list.innerHTML = '';
+      items.forEach(({ file, title, etaSeconds }) => {
+        const row = document.createElement('button');
+        row.type = 'button';
+        row.className = 'm4-tour-row';
+        row.innerHTML = `
+          <span class="m4-tour-title">${title}</span>
+          <span class="m4-tour-eta">~${secondsToLabel(etaSeconds)}</span>
+        `;
+        row.addEventListener('click', async () => {
+          closeToursDrawer();              // hide drawer
+          // mirror the same start flow your info-popup uses
+          try {
+            // close popup + MapUI if visible (like your working button does)
+            document.getElementById('m4-info-popup')?.classList.remove('m4-open');
+            const pop = document.getElementById('m4-info-popup');
+            if (pop) pop.style.display = 'none';
+            document.getElementById('m4-close')?.click();
+
+            if (typeof window.startTourFromPopup === 'function') {
+              await window.startTourFromPopup(file);
+              window.dispatchEvent(new Event('tour:end'));
+            } else if (typeof window.startTour === 'function') {
+              await window.startTour(file);
+              window.dispatchEvent(new Event('tour:end'));
+            } else if (window.AutoTour?.start) {
+              await window.AutoTour.start(file);
+            }
+          } catch (e) {
+            console.warn('[Tours] start failed', e);
+          }
+        });
+        row.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); row.click(); }
+        });
+        list.appendChild(row);
+      });
+    } catch (e) {
+      console.warn('[Tours] load failed', e);
+      list.innerHTML = '<div class="m4-tours-empty">Add <code>tour/tours/index.json</code>.</div>';
+    }
+  }
+
+  // ---------- position panel so it hugs the MapUI dialog ----------
+  function positionPanelToToggle() {
+    const dialog = document.querySelector('.m4-dialog');
+    const panel  = document.getElementById('m4-tours-panel');
+    if (!dialog || !panel) return;
+
+    if (panel.parentElement !== dialog) dialog.appendChild(panel);
+
+    const d = dialog.getBoundingClientRect();
+    const head = dialog.querySelector('.m4-head');
+    const headBottom = head ? head.getBoundingClientRect().bottom : d.top;
+
+    const panelW = panel.offsetWidth || 340;
+    const top  = (headBottom - d.top) + 8;       // tuck under the header
+    const left = (d.width - panelW - 12);        // right edge inside the dialog
+
+    Object.assign(panel.style, {
+      left  : `${Math.round(left)}px`,
+      top   : `${Math.round(top)}px`,
+      right : 'auto',
+      bottom: '12px'
+    });
+  }
+
+  // ---------- open/close ----------
+  let releaseTrap = null;
+
+  function focusTrap(container) {
+    const SEL = 'a,button,input,select,textarea,[tabindex]:not([tabindex="-1"])';
+    const nodes = [...container.querySelectorAll(SEL)].filter(el => !el.disabled && el.offsetParent);
+    if (!nodes.length) return () => {};
+    const first = nodes[0], last = nodes[nodes.length-1];
+    function onKey(e){
+      if (e.key !== 'Tab') return;
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+    container.addEventListener('keydown', onKey);
+    first.focus({ preventScroll: true });
+    return () => container.removeEventListener('keydown', onKey);
+  }
+
+  window.openToursDrawer = async function openToursDrawer() {
+    const panel = $('#m4-tours-panel');
+    const toggle = $('#m4-tours-toggle');
+    if (!panel || !toggle) return;
+
+    await renderList();
+    positionPanelToToggle();
+
+    panel.hidden = false;
+    toggle.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(() => panel.classList.add('m4-open'));
+
+    const last = document.activeElement;
+    releaseTrap = focusTrap(panel);
+    panel._restore = () => last?.focus?.();
+
+    const onEsc = (e) => { if (e.key === 'Escape') closeToursDrawer(); };
+    panel._esc = onEsc;
+    window.addEventListener('keydown', onEsc, { once: true });
+    window.addEventListener('resize', positionPanelToToggle);
+  };
+
+  window.closeToursDrawer = function closeToursDrawer() {
+    const panel  = $('#m4-tours-panel');
+    const toggle = $('#m4-tours-toggle');
+    if (!panel || !toggle) return;
+
+    panel.classList.remove('m4-open');
+    panel.addEventListener('transitionend', () => { panel.hidden = true; }, { once: true });
+    toggle.setAttribute('aria-expanded', 'false');
+
+    // silence the aria-hidden console warning
+    const backdrop = document.getElementById('m4-backdrop');
+    safeHideAria(backdrop);
+
+    releaseTrap?.(); releaseTrap = null;
+    panel._restore?.(); panel._restore = null;
+    if (panel._esc) { window.removeEventListener('keydown', panel._esc); panel._esc = null; }
+    window.removeEventListener('resize', positionPanelToToggle);
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    $('#m4-tours-toggle')?.addEventListener('click', () => {
+      const panel = $('#m4-tours-panel');
+      panel?.classList.contains('m4-open') ? closeToursDrawer() : openToursDrawer();
+    });
+    $('#m4-tours-close')?.addEventListener('click', closeToursDrawer);
+    document.getElementById('m4-close')?.addEventListener('click', closeToursDrawer);
+  });
+})();

@@ -2,7 +2,7 @@
   "scenes": [
     {
       "sceneId": "0-lawn-e-gate",
-      "north": 120,
+      "north": -131,
       "areas": [
         {
           "name": "Lawn E",
@@ -18,7 +18,7 @@
     },
     {
       "sceneId": "1-lawn-e-1",
-      "north": 160,
+      "north": 154,
       "areas": [
         {
           "name": "Roses",
@@ -34,7 +34,7 @@
     },
     {
       "sceneId": "2-lawn-e-2",
-      "north": 127,
+      "north": 121,
       "areas": [
         {
           "name": "Lawn B",
@@ -252,8 +252,19 @@
     },
     {
       "sceneId": "52-wesleyan-b-3",
-      "north": 0,
-      "areas": []
+      "north": 30,
+      "areas": [
+        {
+          "name": "Tanderra Lawn",
+          "yaw": -92.05,
+          "pitch": 8.75
+        },
+        {
+          "name": "Tanderra Memorial Gardens",
+          "yaw": 103.87,
+          "pitch": 8.72
+        }
+      ]
     },
     {
       "sceneId": "22-bailey-drive-2",
@@ -337,38 +348,107 @@
     },
     {
       "sceneId": "239-theterraces-1",
-      "north": 0,
-      "areas": []
+      "north": -137,
+      "areas": [
+        {
+          "name": "The Terraces",
+          "yaw": 102.42,
+          "pitch": -2.87
+        }
+      ],
+      "sceneWideLabel": "The Terraces"
     },
     {
       "sceneId": "240-theterraces-2",
-      "north": 0,
-      "areas": []
+      "north": 148,
+      "areas": [
+        {
+          "name": "The Terraces",
+          "yaw": 125.1,
+          "pitch": 15.93
+        }
+      ],
+      "sceneWideLabel": "The Terraces"
     },
     {
       "sceneId": "173-lawnh-1",
-      "north": 0,
-      "areas": []
+      "north": 164,
+      "areas": [
+        {
+          "name": "Lawn H",
+          "yaw": -111.4,
+          "pitch": 2.13
+        },
+        {
+          "name": "Open Ground C,D & E",
+          "yaw": 77.01,
+          "pitch": 23.92
+        }
+      ]
     },
     {
       "sceneId": "172-grahamdrive-5",
-      "north": 0,
-      "areas": []
+      "north": -112,
+      "areas": [
+        {
+          "name": "Lawn L",
+          "yaw": 44.68,
+          "pitch": 24.99
+        },
+        {
+          "name": "Presbyterian C",
+          "yaw": -92.34,
+          "pitch": 23.92
+        }
+      ]
     },
     {
       "sceneId": "163-stone-drive-lawn-k-conifer-gardens---5",
-      "north": 0,
-      "areas": []
+      "north": -17,
+      "areas": [
+        {
+          "name": "Open Ground C, D &E",
+          "yaw": -111.88,
+          "pitch": 10.56
+        },
+        {
+          "name": "Conifer Gardens",
+          "yaw": 67.06,
+          "pitch": -1.8
+        }
+      ]
     },
     {
       "sceneId": "159-stone-drive-lawn-k-conifer-gardens---1",
-      "north": 0,
-      "areas": []
+      "north": -13,
+      "areas": [
+        {
+          "name": "Conifer Gardens",
+          "yaw": 34.61,
+          "pitch": 1.38
+        },
+        {
+          "name": "Open Ground C, D &E",
+          "yaw": -78.14,
+          "pitch": 3.6
+        }
+      ]
     },
     {
       "sceneId": "160-stone-drive-lawn-k-conifer-gardens---2",
-      "north": 0,
-      "areas": []
+      "north": 2,
+      "areas": [
+        {
+          "name": "Open Ground C, D &E",
+          "yaw": -72.79,
+          "pitch": 0.84
+        },
+        {
+          "name": "Conifer Gardens",
+          "yaw": 95.06,
+          "pitch": 2.86
+        }
+      ]
     },
     {
       "sceneId": "46-barnard-drive-7",
@@ -420,8 +500,24 @@
     },
     {
       "sceneId": "50-wesleyan-b-1",
-      "north": 0,
-      "areas": []
+      "north": 15,
+      "areas": [
+        {
+          "name": "Hebrew",
+          "yaw": -123.52,
+          "pitch": -2.21
+        },
+        {
+          "name": "Tanderra Lawn",
+          "yaw": -44.53,
+          "pitch": 6.84
+        },
+        {
+          "name": "Wesleyan B",
+          "yaw": 100.11,
+          "pitch": -2.47
+        }
+      ]
     },
     {
       "sceneId": "39-private-c-8",
@@ -478,13 +574,35 @@
     },
     {
       "sceneId": "92-birdsong--11",
-      "north": 0,
-      "areas": []
+      "north": 179,
+      "areas": [
+        {
+          "name": "Church Of England A",
+          "yaw": 77.95,
+          "pitch": 12.45
+        },
+        {
+          "name": "Open Ground A,B",
+          "yaw": -71.97,
+          "pitch": 6.49
+        }
+      ]
     },
     {
       "sceneId": "90-birdsong--9",
-      "north": 0,
-      "areas": []
+      "north": 169,
+      "areas": [
+        {
+          "name": "Birch Forest",
+          "yaw": -90.19,
+          "pitch": 1.95
+        },
+        {
+          "name": "Church of England B",
+          "yaw": 73.57,
+          "pitch": 22.25
+        }
+      ]
     },
     {
       "sceneId": "17-coea1",
@@ -530,148 +648,457 @@
     },
     {
       "sceneId": "89-birdsong--6",
-      "north": 0,
-      "areas": []
+      "north": 160,
+      "areas": [
+        {
+          "name": "Church Of England B",
+          "yaw": 68.25,
+          "pitch": 0.13
+        },
+        {
+          "name": "Birdsong Walk",
+          "yaw": -87.35,
+          "pitch": 31.33
+        }
+      ]
     },
     {
       "sceneId": "93-birdsong--12",
-      "north": 0,
-      "areas": []
+      "north": -172,
+      "areas": [
+        {
+          "name": "Open Ground A,B",
+          "yaw": -89.06,
+          "pitch": 10.4
+        },
+        {
+          "name": "Church Of England A",
+          "yaw": 127.41,
+          "pitch": 22.15
+        }
+      ]
     },
     {
       "sceneId": "164-stone-drive-open-ground-f---1",
-      "north": 0,
-      "areas": []
+      "north": -5,
+      "areas": [
+        {
+          "name": "Open Ground F",
+          "yaw": 63,
+          "pitch": 16.6
+        }
+      ]
     },
     {
       "sceneId": "165-stone-drive-open-ground-f---2",
-      "north": 0,
-      "areas": []
+      "north": -11,
+      "areas": [
+        {
+          "name": "Open Ground F",
+          "yaw": 12.03,
+          "pitch": 0.95
+        }
+      ]
     },
     {
       "sceneId": "166-stone-drive-open-ground-f---3",
-      "north": 0,
-      "areas": []
+      "north": -8,
+      "areas": [
+        {
+          "name": "Open Ground F",
+          "yaw": 80.88,
+          "pitch": 7.26
+        }
+      ]
     },
     {
       "sceneId": "175-lawnh-3",
-      "north": 0,
-      "areas": []
+      "north": 165,
+      "areas": [
+        {
+          "name": "Open Ground C,D & E",
+          "yaw": 102.11,
+          "pitch": 28.73
+        },
+        {
+          "name": "Lawn H",
+          "yaw": -122.81,
+          "pitch": 14.71
+        },
+        {
+          "name": "Pensioner Burial Ground",
+          "yaw": 152.66,
+          "pitch": 30.73
+        }
+      ]
     },
     {
       "sceneId": "177-horsefall-1",
-      "north": 0,
-      "areas": []
+      "north": 76,
+      "areas": [
+        {
+          "name": "Pensioner Burial Ground",
+          "yaw": 92.43,
+          "pitch": 6.46
+        },
+        {
+          "name": "Lawn H",
+          "yaw": -107.75,
+          "pitch": 33.7
+        }
+      ]
     },
     {
       "sceneId": "178-horsefall-2",
-      "north": 0,
-      "areas": []
+      "north": 76,
+      "areas": [
+        {
+          "name": "Pensioner Burial Ground",
+          "yaw": 86.34,
+          "pitch": 12.09
+        },
+        {
+          "name": "Lawn H",
+          "yaw": -109.77,
+          "pitch": 21.57
+        }
+      ]
     },
     {
       "sceneId": "179-horsefall-3",
-      "north": 0,
-      "areas": []
+      "north": 67,
+      "areas": [
+        {
+          "name": "Pensioner Burial Ground",
+          "yaw": 63.71,
+          "pitch": 4.44
+        },
+        {
+          "name": "Lawn H",
+          "yaw": 151.89,
+          "pitch": -10.51
+        }
+      ]
     },
     {
       "sceneId": "131-dixie-drive-roman-catholic-a-c---3",
-      "north": 0,
-      "areas": []
+      "north": -92,
+      "areas": [
+        {
+          "name": "Roman Catholic C",
+          "yaw": -84.7,
+          "pitch": 8.1
+        },
+        {
+          "name": "Roman Catholic A",
+          "yaw": 101.04,
+          "pitch": -4.86
+        }
+      ]
     },
     {
       "sceneId": "132-dixie-drive-roman-catholic-a-c---5",
-      "north": 0,
-      "areas": []
+      "north": -92,
+      "areas": [
+        {
+          "name": "Roman Catholic A",
+          "yaw": 63.89,
+          "pitch": 2.66
+        },
+        {
+          "name": "Roman Catholic C",
+          "yaw": -81.93,
+          "pitch": 11.37
+        }
+      ]
     },
     {
       "sceneId": "129-dixie-drive-roman-catholic-a-c---1",
-      "north": 0,
-      "areas": []
+      "north": -94,
+      "areas": [
+        {
+          "name": "Roman Catholic C",
+          "yaw": -81.68,
+          "pitch": 11.76
+        },
+        {
+          "name": "Roman Catholic A",
+          "yaw": 76.66,
+          "pitch": 20.09
+        }
+      ]
     },
     {
       "sceneId": "128-dixie-drive---11",
-      "north": 0,
-      "areas": []
+      "north": -109,
+      "areas": [
+        {
+          "name": "Roman Catholic E",
+          "yaw": 78.79,
+          "pitch": 18.58
+        },
+        {
+          "name": "Lawn L",
+          "yaw": -103.18,
+          "pitch": 7.22
+        }
+      ]
     },
     {
       "sceneId": "127-dixie-drive---10",
-      "north": 0,
-      "areas": []
+      "north": -104,
+      "areas": [
+        {
+          "name": "Roman Catholic E",
+          "yaw": 61.93,
+          "pitch": 9.92
+        },
+        {
+          "name": "Lawn L",
+          "yaw": -99.12,
+          "pitch": 2.14
+        }
+      ]
     },
     {
       "sceneId": "123-dixie-drive---6",
-      "north": 0,
-      "areas": []
+      "north": -75,
+      "areas": [
+        {
+          "name": "Roman Catholic E",
+          "yaw": 107.09,
+          "pitch": 9.46
+        },
+        {
+          "name": "Lawn K",
+          "yaw": -88.7,
+          "pitch": 19.88
+        }
+      ]
     },
     {
       "sceneId": "130-dixie-drive-roman-catholic-a-c---2",
-      "north": 0,
-      "areas": []
+      "north": -93,
+      "areas": [
+        {
+          "name": "Roman Catholic A",
+          "yaw": 95.72,
+          "pitch": 9.57
+        },
+        {
+          "name": "Roman Catholic C",
+          "yaw": -85.65,
+          "pitch": 24.95
+        }
+      ]
     },
     {
       "sceneId": "138-graham-drive-coe-f-and-roman-catholic-c---01",
-      "north": 0,
-      "areas": []
+      "north": 90,
+      "areas": [
+        {
+          "name": "Roman Catholic C",
+          "yaw": -76.24,
+          "pitch": 17.66
+        },
+        {
+          "name": "Church Of England F",
+          "yaw": 100.41,
+          "pitch": -2.53
+        }
+      ]
     },
     {
       "sceneId": "139-graham-drive-coe-f-and-roman-catholic-c---03",
-      "north": 0,
-      "areas": []
+      "north": 82,
+      "areas": [
+        {
+          "name": "Roman Catholic C",
+          "yaw": -67.77,
+          "pitch": 13.87
+        },
+        {
+          "name": "Church Of England F",
+          "yaw": 75.52,
+          "pitch": 23.77
+        }
+      ]
     },
     {
       "sceneId": "140-graham-drive-coe-f-and-roman-catholic-c---02",
-      "north": 0,
-      "areas": []
+      "north": 86,
+      "areas": [
+        {
+          "name": "Roman Catholic C",
+          "yaw": -67.77,
+          "pitch": 13.87
+        },
+        {
+          "name": "Church Of England F",
+          "yaw": 89,
+          "pitch": 13.62
+        }
+      ]
     },
     {
       "sceneId": "141-roman-catholic-b-d-e-lawn-l-shears-drive-1",
-      "north": 0,
-      "areas": []
+      "north": 10,
+      "areas": [
+        {
+          "name": "Lawn L",
+          "yaw": -54.76,
+          "pitch": 18.42
+        },
+        {
+          "name": "Roman Catholic D",
+          "yaw": 82.88,
+          "pitch": -3.04
+        }
+      ]
     },
     {
       "sceneId": "137-dixie-drive-roman-catholic-b-d--4",
-      "north": 0,
-      "areas": []
+      "north": 83,
+      "areas": [
+        {
+          "name": "Roman Catholic D",
+          "yaw": 77.36,
+          "pitch": 18.54
+        },
+        {
+          "name": "Roman Catholic B",
+          "yaw": -90.53,
+          "pitch": -6.18
+        }
+      ]
     },
     {
       "sceneId": "136-dixie-drive-roman-catholic-b-d---3",
-      "north": 0,
-      "areas": []
+      "north": 89,
+      "areas": [
+        {
+          "name": "Roman Catholic B",
+          "yaw": -85.35,
+          "pitch": 10.13
+        },
+        {
+          "name": "Roman Catholic D",
+          "yaw": 70.96,
+          "pitch": 29.66
+        }
+      ]
     },
     {
       "sceneId": "135-dixie-drive-roman-catholic-b-d--2",
-      "north": 0,
-      "areas": []
+      "north": 85,
+      "areas": [
+        {
+          "name": "Roman Catholic D",
+          "yaw": 85.7,
+          "pitch": 16.34
+        },
+        {
+          "name": "Roman Catholic B",
+          "yaw": -87.02,
+          "pitch": -7.11
+        }
+      ]
     },
     {
       "sceneId": "134-dixie-drive-roman-catholic-b-d--1",
-      "north": 0,
-      "areas": []
+      "north": 88,
+      "areas": [
+        {
+          "name": "Roman Catholic B",
+          "yaw": -86.17,
+          "pitch": 17.02
+        },
+        {
+          "name": "Roman Catholic D",
+          "yaw": 88.46,
+          "pitch": -13.4
+        }
+      ]
     },
     {
       "sceneId": "133-dixie-drive-roman-catholic-a-c---6",
-      "north": 0,
-      "areas": []
+      "north": -105,
+      "areas": [
+        {
+          "name": "Roman Catholic A",
+          "yaw": 83.42,
+          "pitch": 11.05
+        },
+        {
+          "name": "Roman Catholic C",
+          "yaw": -111.48,
+          "pitch": 3.22
+        }
+      ]
     },
     {
       "sceneId": "82-presbyterian-a-b-7",
-      "north": 0,
-      "areas": []
+      "north": 162,
+      "areas": [
+        {
+          "name": "Presbyterian A",
+          "yaw": -92.73,
+          "pitch": 13.7
+        },
+        {
+          "name": "Presbyterian B",
+          "yaw": 89.42,
+          "pitch": 24.19
+        }
+      ]
     },
     {
       "sceneId": "81-presbyterian-a-b-6",
-      "north": 0,
-      "areas": []
+      "north": 167,
+      "areas": [
+        {
+          "name": "Presbyterian B",
+          "yaw": 91.43,
+          "pitch": 13.71
+        },
+        {
+          "name": "Presbyterian A",
+          "yaw": -74.35,
+          "pitch": 21.08
+        }
+      ]
     },
     {
       "sceneId": "83-presbyterian-a-b-8",
-      "north": 0,
-      "areas": []
+      "north": 178,
+      "areas": [
+        {
+          "name": "Presbyterian B",
+          "yaw": 97.31,
+          "pitch": 18.79
+        },
+        {
+          "name": "Presbyterian A",
+          "yaw": -85.47,
+          "pitch": 24.31
+        }
+      ]
     },
     {
       "sceneId": "76-beames-drive--3",
-      "north": 0,
-      "areas": []
+      "north": -68,
+      "areas": [
+        {
+          "name": "Fountain Gardens",
+          "yaw": -127.59,
+          "pitch": 4.29
+        },
+        {
+          "name": "Tanderra Memorial Gardens",
+          "yaw": 48.29,
+          "pitch": -12.51
+        }
+      ]
     },
     {
       "sceneId": "44-barnard-drive-5",
@@ -723,83 +1150,284 @@
     },
     {
       "sceneId": "196-methd-2",
-      "north": 0,
-      "areas": []
+      "north": -32,
+      "areas": [
+        {
+          "name": "Church Of England F",
+          "yaw": -65.45,
+          "pitch": 4.82
+        },
+        {
+          "name": "Methodist E",
+          "yaw": -82.4,
+          "pitch": -5.78
+        }
+      ]
     },
     {
       "sceneId": "197-methd-3",
-      "north": 0,
-      "areas": []
+      "north": -21,
+      "areas": [
+        {
+          "name": "Methodist E",
+          "yaw": -93.87,
+          "pitch": 24.4
+        },
+        {
+          "name": "Church Of England F",
+          "yaw": 38.05,
+          "pitch": -8.48
+        }
+      ]
     },
     {
       "sceneId": "192-romancathf-1",
-      "north": 0,
-      "areas": []
+      "north": -53,
+      "areas": [
+        {
+          "name": "Church Of England G",
+          "yaw": -8.8,
+          "pitch": 0.98
+        },
+        {
+          "name": "Roman Catholic F",
+          "yaw": -79.21,
+          "pitch": 13.74
+        }
+      ]
     },
     {
       "sceneId": "58-indi-a-wesleyan-d",
-      "north": 0,
-      "areas": []
+      "north": 165,
+      "areas": [
+        {
+          "name": "Wesleyan D",
+          "yaw": 33.79,
+          "pitch": 5.53
+        },
+        {
+          "name": "Independent A",
+          "yaw": 89.82,
+          "pitch": 12.71
+        },
+        {
+          "name": "German Lutheran",
+          "yaw": -118.52,
+          "pitch": 11.92
+        }
+      ]
     },
     {
       "sceneId": "59-german-2-indi-a",
-      "north": 0,
-      "areas": []
+      "north": 159,
+      "areas": [
+        {
+          "name": "German Lutheran",
+          "yaw": -141.01,
+          "pitch": 20.99
+        },
+        {
+          "name": "Independent A",
+          "yaw": 71.98,
+          "pitch": 26.45
+        }
+      ]
     },
     {
       "sceneId": "61-roman-b-german-1",
-      "north": 0,
-      "areas": []
+      "north": 79,
+      "areas": [
+        {
+          "name": "German Lutheran",
+          "yaw": -63.3,
+          "pitch": 17.96
+        },
+        {
+          "name": "Presbyterian B",
+          "yaw": -170.09,
+          "pitch": 17.22
+        },
+        {
+          "name": "Roman Catholic B",
+          "yaw": 101.86,
+          "pitch": -14.37
+        }
+      ]
     },
     {
       "sceneId": "245-cooper-drive-5",
-      "north": 0,
-      "areas": []
+      "north": -95,
+      "areas": [
+        {
+          "name": "Islamic",
+          "yaw": -88.08,
+          "pitch": 10.37
+        },
+        {
+          "name": "Church Of England F",
+          "yaw": 75.05,
+          "pitch": 18.51
+        }
+      ]
     },
     {
       "sceneId": "94-buhist-roman-a",
-      "north": 0,
-      "areas": []
+      "north": 45,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -150.73,
+          "pitch": 34.82
+        },
+        {
+          "name": "Roman Catholic A",
+          "yaw": 46.37,
+          "pitch": 10.4
+        },
+        {
+          "name": "Presbyterian A",
+          "yaw": -60.85,
+          "pitch": 1.22
+        },
+        {
+          "name": "Buddhist A",
+          "yaw": -107.88,
+          "pitch": -7.76
+        }
+      ]
     },
     {
       "sceneId": "95-pres-a-roman-a-1",
-      "north": 0,
-      "areas": []
+      "north": 72,
+      "areas": [
+        {
+          "name": "Presbyterian A",
+          "yaw": -126.49,
+          "pitch": 36.85
+        },
+        {
+          "name": "Roman Catholic A",
+          "yaw": 61.68,
+          "pitch": 5.64
+        }
+      ]
     },
     {
       "sceneId": "84-birdsong--1",
-      "north": 0,
-      "areas": []
+      "north": 140,
+      "areas": [
+        {
+          "name": "Buddhist A",
+          "yaw": 45.49,
+          "pitch": 8.08
+        },
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -74.65,
+          "pitch": 15.04
+        }
+      ]
     },
     {
       "sceneId": "54-wesleyan-b-5",
-      "north": 0,
-      "areas": []
+      "north": 24,
+      "areas": [
+        {
+          "name": "Tanderra Lawn",
+          "yaw": -78.8,
+          "pitch": 14.19
+        },
+        {
+          "name": "Tanderra Memorial Gardens",
+          "yaw": 132.73,
+          "pitch": 9.37
+        },
+        {
+          "name": "Fountain Gardens",
+          "yaw": 48.96,
+          "pitch": 5.51
+        }
+      ]
     },
     {
       "sceneId": "53-wesleyan-b-4",
-      "north": 0,
-      "areas": []
+      "north": 37,
+      "areas": [
+        {
+          "name": "Tanderra Memorial Gardens",
+          "yaw": 93.25,
+          "pitch": 11.73
+        },
+        {
+          "name": "Tanderra Lawn",
+          "yaw": -92.32,
+          "pitch": 23.64
+        }
+      ]
     },
     {
       "sceneId": "198-crawcourdrv-7",
-      "north": 0,
-      "areas": []
+      "north": -174,
+      "areas": [
+        {
+          "name": "Highview Gardens",
+          "yaw": -127.8,
+          "pitch": 23.92
+        },
+        {
+          "name": "Church Of England",
+          "yaw": 59.59,
+          "pitch": 7.77
+        }
+      ]
     },
     {
       "sceneId": "113-crawcourdrv-2",
-      "north": 0,
-      "areas": []
+      "north": -107,
+      "areas": [
+        {
+          "name": "Lawn G",
+          "yaw": 95.71,
+          "pitch": -5.92
+        },
+        {
+          "name": "Highview Gardens",
+          "yaw": -102.05,
+          "pitch": 7.46
+        }
+      ]
     },
     {
       "sceneId": "114-crawcourdrv-3",
-      "north": 0,
-      "areas": []
+      "north": -126,
+      "areas": [
+        {
+          "name": "Highview Gardens",
+          "yaw": -68.13,
+          "pitch": 2.26
+        },
+        {
+          "name": "Lawn G",
+          "yaw": 85.72,
+          "pitch": 23.52
+        }
+      ]
     },
     {
       "sceneId": "115-crawcourdrv-4",
-      "north": -123,
-      "areas": []
+      "north": -126,
+      "areas": [
+        {
+          "name": "Lawn G",
+          "yaw": 114.19,
+          "pitch": 14.47
+        },
+        {
+          "name": "Highview Gardens",
+          "yaw": -92.76,
+          "pitch": 12.29
+        }
+      ]
     },
     {
       "sceneId": "14-private-f-lake",
@@ -1117,6 +1745,2090 @@
           "name": "Private B",
           "yaw": -112.17,
           "pitch": 10.16
+        }
+      ]
+    },
+    {
+      "sceneId": "51-wesleyan-b-2",
+      "north": 6,
+      "areas": [
+        {
+          "name": "Wesleyan B",
+          "yaw": 112.71,
+          "pitch": 15.79
+        },
+        {
+          "name": "Tanderra Lawn",
+          "yaw": -85.54,
+          "pitch": -8.57
+        }
+      ]
+    },
+    {
+      "sceneId": "55-hill-coe-e-1",
+      "north": -144,
+      "areas": [
+        {
+          "name": "Hill Block",
+          "yaw": 78.06,
+          "pitch": 4.14
+        },
+        {
+          "name": "Church of England E",
+          "yaw": -87.85,
+          "pitch": 18.86
+        }
+      ]
+    },
+    {
+      "sceneId": "56-wes-c-wes-a",
+      "north": -161,
+      "areas": [
+        {
+          "name": "Church of England E",
+          "yaw": -33.48,
+          "pitch": -16.03
+        },
+        {
+          "name": "Church of England D",
+          "yaw": -151.17,
+          "pitch": 25.54
+        },
+        {
+          "name": "Wesleyan A",
+          "yaw": 72.73,
+          "pitch": 16.51
+        }
+      ]
+    },
+    {
+      "sceneId": "57-coe-d-wes-d-wes-c",
+      "north": -160,
+      "areas": [
+        {
+          "name": "Wesleyan C",
+          "yaw": 59,
+          "pitch": 5.87
+        },
+        {
+          "name": "Wesleyan D",
+          "yaw": 147.53,
+          "pitch": 13.66
+        },
+        {
+          "name": "Church Of England D",
+          "yaw": -77.18,
+          "pitch": 9.45
+        }
+      ]
+    },
+    {
+      "sceneId": "60-german-2",
+      "north": 111,
+      "areas": [
+        {
+          "name": "Independent A",
+          "yaw": 17.13,
+          "pitch": 9.46
+        },
+        {
+          "name": "German Lutheran",
+          "yaw": -142.36,
+          "pitch": 6.99
+        }
+      ]
+    },
+    {
+      "sceneId": "62-williamsons-drive--2",
+      "north": 103,
+      "areas": [
+        {
+          "name": "Independent A",
+          "yaw": 95.41,
+          "pitch": -3.28
+        },
+        {
+          "name": "Wesleyan D",
+          "yaw": -81.22,
+          "pitch": 16.94
+        }
+      ]
+    },
+    {
+      "sceneId": "63-williamsons-drive--3",
+      "north": 99,
+      "areas": [
+        {
+          "name": "Wesleyan D",
+          "yaw": -94.56,
+          "pitch": 12.49
+        },
+        {
+          "name": "Independent A",
+          "yaw": 99.63,
+          "pitch": 2.5
+        }
+      ]
+    },
+    {
+      "sceneId": "64-williamsons-drive--4",
+      "north": 118,
+      "areas": [
+        {
+          "name": "Independent A",
+          "yaw": 82.71,
+          "pitch": 17.43
+        },
+        {
+          "name": "Wesleyan D",
+          "yaw": -90.83,
+          "pitch": 6.75
+        }
+      ]
+    },
+    {
+      "sceneId": "65-williamsons-drive--5",
+      "north": 114,
+      "areas": [
+        {
+          "name": "Wesleyan D",
+          "yaw": -105.44,
+          "pitch": 5.17
+        },
+        {
+          "name": "Independent A",
+          "yaw": 97.1,
+          "pitch": 30.61
+        }
+      ]
+    },
+    {
+      "sceneId": "66-williamsons-drive--6",
+      "north": 114,
+      "areas": [
+        {
+          "name": "Fountain Gardens",
+          "yaw": -78.84,
+          "pitch": 14.43
+        },
+        {
+          "name": "Open Ground F",
+          "yaw": 79.18,
+          "pitch": 11.14
+        }
+      ]
+    },
+    {
+      "sceneId": "67-williamsons-drive--7",
+      "north": 116,
+      "areas": [
+        {
+          "name": "Open Ground F",
+          "yaw": 89.31,
+          "pitch": 11.37
+        },
+        {
+          "name": "Fountain Gardens",
+          "yaw": -89.2,
+          "pitch": 4.14
+        }
+      ]
+    },
+    {
+      "sceneId": "68-williamsons-drive--8",
+      "north": 115,
+      "areas": [
+        {
+          "name": "Fountain Gardens",
+          "yaw": -19.68,
+          "pitch": 10.15
+        },
+        {
+          "name": "Open Ground F",
+          "yaw": 111.3,
+          "pitch": 14.47
+        }
+      ]
+    },
+    {
+      "sceneId": "69-stone-drive-fg--1",
+      "north": 24,
+      "areas": [
+        {
+          "name": "Tanderra Lawn",
+          "yaw": -64.14,
+          "pitch": -0.39
+        },
+        {
+          "name": "Fountain Gardens",
+          "yaw": 81.46,
+          "pitch": -7.22
+        }
+      ]
+    },
+    {
+      "sceneId": "70-stone-drive-fg--2",
+      "north": 23,
+      "areas": [
+        {
+          "name": "Fountain Gardens",
+          "yaw": 76.28,
+          "pitch": -3.02
+        },
+        {
+          "name": "Tanderra Lawn",
+          "yaw": -103.6,
+          "pitch": 5.06
+        }
+      ]
+    },
+    {
+      "sceneId": "71-stone-drive-fg--3",
+      "north": 35,
+      "areas": [
+        {
+          "name": "Tanderra Lawn",
+          "yaw": -101.33,
+          "pitch": 9.78
+        },
+        {
+          "name": "Fountain Gardens",
+          "yaw": 74.53,
+          "pitch": -16.3
+        }
+      ]
+    },
+    {
+      "sceneId": "72-stone-drive-fg--4",
+      "north": 27,
+      "areas": [
+        {
+          "name": "Fountain Gardens",
+          "yaw": 67.83,
+          "pitch": 1.68
+        },
+        {
+          "name": "Tanderra Lawn",
+          "yaw": -87.29,
+          "pitch": 13.16
+        }
+      ]
+    },
+    {
+      "sceneId": "73-stone-drive-fg--5",
+      "north": 8,
+      "areas": [
+        {
+          "name": "Tanderra Lawn",
+          "yaw": -103.58,
+          "pitch": 5.68
+        },
+        {
+          "name": "Fountain Gardens",
+          "yaw": 93.82,
+          "pitch": 18.44
+        }
+      ]
+    },
+    {
+      "sceneId": "74-beames-drive--1",
+      "north": -86,
+      "areas": [
+        {
+          "name": "Fountain Gardens",
+          "yaw": -91.37,
+          "pitch": 9.5
+        },
+        {
+          "name": "Tanderra Memorial Gardens",
+          "yaw": 49.67,
+          "pitch": -3.73
+        }
+      ]
+    },
+    {
+      "sceneId": "75-beames-drive--2",
+      "north": -69,
+      "areas": [
+        {
+          "name": "Tanderra Memorial Gardens",
+          "yaw": 119.1,
+          "pitch": 6.16
+        },
+        {
+          "name": "Fountain Gardens",
+          "yaw": -78.92,
+          "pitch": 10.6
+        }
+      ]
+    },
+    {
+      "sceneId": "77-beames-drive--4",
+      "north": -69,
+      "areas": [
+        {
+          "name": "Tanderra Memorial Gardens",
+          "yaw": 113.27,
+          "pitch": 6.28
+        },
+        {
+          "name": "Wesleyan D",
+          "yaw": -71.2,
+          "pitch": 10.7
+        }
+      ]
+    },
+    {
+      "sceneId": "78-beames-drive--5",
+      "north": -69,
+      "areas": [
+        {
+          "name": "Wesleyan D",
+          "yaw": -93.81,
+          "pitch": 13.71
+        },
+        {
+          "name": "Wesleyan C",
+          "yaw": 88.56,
+          "pitch": 5.59
+        }
+      ]
+    },
+    {
+      "sceneId": "79-beames-drive--6",
+      "north": -79,
+      "areas": [
+        {
+          "name": "Wesleyan C",
+          "yaw": 83.87,
+          "pitch": 7.98
+        },
+        {
+          "name": "Wesleyan D",
+          "yaw": -75.97,
+          "pitch": 21.72
+        }
+      ]
+    },
+    {
+      "sceneId": "80-pres-b-roman-b-1",
+      "north": 70,
+      "areas": [
+        {
+          "name": "Roman Catholic B",
+          "yaw": 70.21,
+          "pitch": 1.85
+        },
+        {
+          "name": "Presbyterian B",
+          "yaw": -88.8,
+          "pitch": 9.76
+        }
+      ]
+    },
+    {
+      "sceneId": "85-birdsong--2",
+      "north": 157,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -65.93,
+          "pitch": 2.98
+        },
+        {
+          "name": "Buddhist A",
+          "yaw": 63.83,
+          "pitch": 20.04
+        }
+      ]
+    },
+    {
+      "sceneId": "86-birdsong--3",
+      "north": 152,
+      "areas": [
+        {
+          "name": "Buddhist A",
+          "yaw": 94.67,
+          "pitch": 11.75
+        },
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -111.06,
+          "pitch": 6.46
+        }
+      ]
+    },
+    {
+      "sceneId": "87-birdsong--4",
+      "north": 145,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -98.23,
+          "pitch": 8.85
+        },
+        {
+          "name": "Church Of England B",
+          "yaw": 86.65,
+          "pitch": 24.93
+        }
+      ]
+    },
+    {
+      "sceneId": "88-birdsong--5",
+      "north": 149,
+      "areas": [
+        {
+          "name": "Church Of England B",
+          "yaw": 49.24,
+          "pitch": 9.2
+        },
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -108.02,
+          "pitch": 2.68
+        }
+      ]
+    },
+    {
+      "sceneId": "91-birdsong--10",
+      "north": 172,
+      "areas": [
+        {
+          "name": "Church of England B",
+          "yaw": 81.32,
+          "pitch": 16.9
+        },
+        {
+          "name": "Birch Forest",
+          "yaw": -108,
+          "pitch": 0.13
+        }
+      ]
+    },
+    {
+      "sceneId": "96-birdsongg-1",
+      "north": -132,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": 3.14,
+          "pitch": 19.6
+        }
+      ],
+      "sceneWideLabel": "Birdsong Gardens"
+    },
+    {
+      "sceneId": "97-birdsongg-2",
+      "north": -164,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -87.24,
+          "pitch": 8.86
+        }
+      ],
+      "sceneWideLabel": "Birdsong Gardens"
+    },
+    {
+      "sceneId": "98-birdsongg-3",
+      "north": 106,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -87.24,
+          "pitch": 8.86
+        }
+      ],
+      "sceneWideLabel": "Birdsong Gardens"
+    },
+    {
+      "sceneId": "99-birdsongg-4",
+      "north": 108,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -13.25,
+          "pitch": 11.04
+        }
+      ],
+      "sceneWideLabel": "Birdsong Gardens"
+    },
+    {
+      "sceneId": "100-birdsongg-5",
+      "north": 139,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -13.25,
+          "pitch": 11.04
+        }
+      ],
+      "sceneWideLabel": "Birdsong Gardens"
+    },
+    {
+      "sceneId": "101-birdsongg-6",
+      "north": 129,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": 122.05,
+          "pitch": 21.39
+        }
+      ],
+      "sceneWideLabel": "Birdsong Gardens"
+    },
+    {
+      "sceneId": "102-birdsongg-7",
+      "north": 136,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -8.71,
+          "pitch": -1.89
+        }
+      ],
+      "sceneWideLabel": "Birdsong Gardens"
+    },
+    {
+      "sceneId": "103-birdsongg-8",
+      "north": 119,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": 115.7,
+          "pitch": -11.81
+        }
+      ],
+      "sceneWideLabel": "Birdsong Gardens"
+    },
+    {
+      "sceneId": "104-birdsongg-9",
+      "north": 71,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -58.44,
+          "pitch": 4.73
+        }
+      ],
+      "sceneWideLabel": "Birdsong Gardens"
+    },
+    {
+      "sceneId": "105-birdsongg-10",
+      "north": 177,
+      "areas": [
+        {
+          "name": "Birdsong Walk",
+          "yaw": 11.16,
+          "pitch": 8.27
+        },
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -161.1,
+          "pitch": -4.06
+        },
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -75.22,
+          "pitch": 28.2
+        }
+      ]
+    },
+    {
+      "sceneId": "106-birdsongg-11",
+      "north": -133,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -66.41,
+          "pitch": 9.61
+        },
+        {
+          "name": "Birdsong Walk",
+          "yaw": 31.9,
+          "pitch": 2.37
+        }
+      ]
+    },
+    {
+      "sceneId": "107-birdsongg-12",
+      "north": -116,
+      "areas": [
+        {
+          "name": "Birdsong Walk",
+          "yaw": 62.39,
+          "pitch": 9.92
+        },
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -120.01,
+          "pitch": 26.94
+        }
+      ]
+    },
+    {
+      "sceneId": "108-birdsongg-13",
+      "north": -92,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -101.67,
+          "pitch": 3.93
+        },
+        {
+          "name": "Birdsong Walk",
+          "yaw": -35.33,
+          "pitch": -2.78
+        }
+      ]
+    },
+    {
+      "sceneId": "109-birdsongg-14",
+      "north": -94,
+      "areas": [
+        {
+          "name": "Birdsong Walk",
+          "yaw": 62.79,
+          "pitch": 7.39
+        },
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -80.15,
+          "pitch": 23.9
+        }
+      ]
+    },
+    {
+      "sceneId": "110-birdsongg-15",
+      "north": -73,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -116.74,
+          "pitch": 9.03
+        },
+        {
+          "name": "Birdsong Walk",
+          "yaw": 45.85,
+          "pitch": -2.35
+        }
+      ]
+    },
+    {
+      "sceneId": "111-birdsongg-16",
+      "north": -71,
+      "areas": [
+        {
+          "name": "Birdsong Walk",
+          "yaw": 60.68,
+          "pitch": 3.88
+        },
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -109.75,
+          "pitch": 4.21
+        }
+      ]
+    },
+    {
+      "sceneId": "112-birdsongg-17",
+      "north": -51,
+      "areas": [
+        {
+          "name": "Birdsong Gardens",
+          "yaw": -13.83,
+          "pitch": -4.07
+        },
+        {
+          "name": "Birdsong Walk",
+          "yaw": 78.08,
+          "pitch": 6.55
+        }
+      ]
+    },
+    {
+      "sceneId": "116-crawcourdrv-5",
+      "north": -132,
+      "areas": [
+        {
+          "name": "Highview Gardens",
+          "yaw": -85.72,
+          "pitch": 7.99
+        },
+        {
+          "name": "Roman Catholic F",
+          "yaw": 78.26,
+          "pitch": 21.14
+        }
+      ]
+    },
+    {
+      "sceneId": "117-crawcourdrv-6",
+      "north": -155,
+      "areas": [
+        {
+          "name": "Roman Catholic F",
+          "yaw": 10.64,
+          "pitch": 3.94
+        },
+        {
+          "name": "Highview Gardens",
+          "yaw": -144.14,
+          "pitch": -3.4
+        }
+      ]
+    },
+    {
+      "sceneId": "199-crawcourdrv-8",
+      "north": -117,
+      "areas": [
+        {
+          "name": "Church Of England",
+          "yaw": 65,
+          "pitch": 10.21
+        },
+        {
+          "name": "Highview Gardens",
+          "yaw": -121.46,
+          "pitch": 16.11
+        }
+      ]
+    },
+    {
+      "sceneId": "200-crawcourdrv-9",
+      "north": -114,
+      "areas": [
+        {
+          "name": "Highview Gardens",
+          "yaw": -112.01,
+          "pitch": 28.53
+        },
+        {
+          "name": "Church Of England G",
+          "yaw": 69.39,
+          "pitch": 38.28
+        }
+      ]
+    },
+    {
+      "sceneId": "201-crawcourdrv-10",
+      "north": -117,
+      "areas": [
+        {
+          "name": "Private H",
+          "yaw": 75.94,
+          "pitch": 22.23
+        },
+        {
+          "name": "Highview Gardens",
+          "yaw": -107.84,
+          "pitch": 5.57
+        }
+      ]
+    },
+    {
+      "sceneId": "202-crawcourdrv-11",
+      "north": -117,
+      "areas": [
+        {
+          "name": "Highview Gardens",
+          "yaw": -109.01,
+          "pitch": 15.14
+        },
+        {
+          "name": "Tanika Lawn",
+          "yaw": 73.47,
+          "pitch": 19.07
+        }
+      ]
+    },
+    {
+      "sceneId": "238-lynndrive-12",
+      "north": 163,
+      "areas": [
+        {
+          "name": "Roman Catholic C",
+          "yaw": 93.43,
+          "pitch": 24.31
+        },
+        {
+          "name": "Roman Catholic A",
+          "yaw": 22.21,
+          "pitch": -19.93
+        },
+        {
+          "name": "The Terraces",
+          "yaw": -38.8,
+          "pitch": -2.98
+        }
+      ]
+    },
+    {
+      "sceneId": "227-lynndrive-1",
+      "north": 151,
+      "areas": [
+        {
+          "name": "Tanika Lawn",
+          "yaw": 72.36,
+          "pitch": 17.7
+        },
+        {
+          "name": "Highview Gardens",
+          "yaw": 146.41,
+          "pitch": 6.14
+        }
+      ]
+    },
+    {
+      "sceneId": "228-lynndrive-2",
+      "north": 138,
+      "areas": [
+        {
+          "name": "Tanika Lawn",
+          "yaw": 15.08,
+          "pitch": 8.86
+        }
+      ],
+      "sceneWideLabel": "Tanika Lawn"
+    },
+    {
+      "sceneId": "229-lynndrive-3",
+      "north": 142,
+      "areas": [
+        {
+          "name": "Tanika Lawn",
+          "yaw": 52.75,
+          "pitch": 15.72
+        }
+      ],
+      "sceneWideLabel": "Tanika Lawn"
+    },
+    {
+      "sceneId": "230-lynndrive-4",
+      "north": 141,
+      "areas": [
+        {
+          "name": "Islamic",
+          "yaw": 4.44,
+          "pitch": 9.55
+        },
+        {
+          "name": "Church Of England F",
+          "yaw": 5.21,
+          "pitch": 8.15
+        }
+      ]
+    },
+    {
+      "sceneId": "231-lynndrive-5",
+      "north": 146,
+      "areas": [
+        {
+          "name": "Church Of England F",
+          "yaw": 140.87,
+          "pitch": 12.88
+        }
+      ],
+      "sceneWideLabel": "Church Of England F"
+    },
+    {
+      "sceneId": "232-lynndrive-6",
+      "north": 148,
+      "areas": [
+        {
+          "name": "Church Of England F",
+          "yaw": -3.81,
+          "pitch": 5.79
+        }
+      ],
+      "sceneWideLabel": "Church Of England F"
+    },
+    {
+      "sceneId": "233-lynndrive-7",
+      "north": 146,
+      "areas": [
+        {
+          "name": "Church Of England F",
+          "yaw": -10.33,
+          "pitch": 4.4
+        }
+      ],
+      "sceneWideLabel": "Church Of England F"
+    },
+    {
+      "sceneId": "234-lynndrive-8",
+      "north": 152,
+      "areas": [
+        {
+          "name": "Church Of England F",
+          "yaw": 49.16,
+          "pitch": 2.52
+        }
+      ]
+    },
+    {
+      "sceneId": "235-lynndrive-9",
+      "north": 152,
+      "areas": [
+        {
+          "name": "Roman Catholic C",
+          "yaw": 29.46,
+          "pitch": 21.39
+        }
+      ],
+      "sceneWideLabel": "Roman Catholic C"
+    },
+    {
+      "sceneId": "236-lynndrive-10",
+      "north": 148,
+      "areas": [
+        {
+          "name": "Roman Catholic C",
+          "yaw": 29.46,
+          "pitch": 21.39
+        }
+      ],
+      "sceneWideLabel": "Roman Catholic C"
+    },
+    {
+      "sceneId": "237-lynndrive-11",
+      "north": 148,
+      "areas": [
+        {
+          "name": "Roman Catholic C",
+          "yaw": -30.89,
+          "pitch": 0.86
+        }
+      ],
+      "sceneWideLabel": "Roman Catholic C"
+    },
+    {
+      "sceneId": "241-theterraces-3",
+      "north": 146,
+      "areas": [
+        {
+          "name": "The Terraces",
+          "yaw": 130.1,
+          "pitch": 12.41
+        }
+      ],
+      "sceneWideLabel": "The Terraces"
+    },
+    {
+      "sceneId": "242-cooper-drive-2",
+      "north": -97,
+      "areas": [
+        {
+          "name": "Church Of England G",
+          "yaw": -46.6,
+          "pitch": 5.47
+        },
+        {
+          "name": "Church Of England F",
+          "yaw": 19.96,
+          "pitch": -4.57
+        }
+      ]
+    },
+    {
+      "sceneId": "243-cooper-drive-3",
+      "north": -91,
+      "areas": [
+        {
+          "name": "Church Of England G",
+          "yaw": -179.88,
+          "pitch": 21.48
+        },
+        {
+          "name": "Church Of England F",
+          "yaw": 70.82,
+          "pitch": 15.78
+        }
+      ]
+    },
+    {
+      "sceneId": "244-cooper-drive-4",
+      "north": -96,
+      "areas": [
+        {
+          "name": "Church Of England G",
+          "yaw": -79.34,
+          "pitch": 2.92
+        },
+        {
+          "name": "Church Of England F",
+          "yaw": 81.78,
+          "pitch": 4.35
+        }
+      ]
+    },
+    {
+      "sceneId": "193-romancathf-2",
+      "north": -29,
+      "areas": [
+        {
+          "name": "Roman Catholic F",
+          "yaw": -71.63,
+          "pitch": -2.52
+        },
+        {
+          "name": "Church Of England G",
+          "yaw": 42.12,
+          "pitch": 2.42
+        }
+      ]
+    },
+    {
+      "sceneId": "194-romancathf-3",
+      "north": -13,
+      "areas": [
+        {
+          "name": "Church Of England G",
+          "yaw": 58.48,
+          "pitch": 11.92
+        },
+        {
+          "name": "Roman Catholic F",
+          "yaw": -87.05,
+          "pitch": 33.24
+        }
+      ]
+    },
+    {
+      "sceneId": "195-methd-1",
+      "north": -25,
+      "areas": [
+        {
+          "name": "Methodist E",
+          "yaw": -80.31,
+          "pitch": 17.69
+        },
+        {
+          "name": "Church Of England F",
+          "yaw": 23.38,
+          "pitch": -10.98
+        }
+      ]
+    },
+    {
+      "sceneId": "203-crem1",
+      "north": -136,
+      "areas": [
+        {
+          "name": "Chapel",
+          "yaw": 161.29,
+          "pitch": 10.94
+        },
+        {
+          "name": "Contemplation Gardens",
+          "yaw": 68.08,
+          "pitch": 23.75
+        }
+      ]
+    },
+    {
+      "sceneId": "204-crem2",
+      "north": -135,
+      "areas": [
+        {
+          "name": "Contemplation Gardens",
+          "yaw": 141.28,
+          "pitch": 25
+        },
+        {
+          "name": "Chapel",
+          "yaw": -163.68,
+          "pitch": 20.89
+        }
+      ]
+    },
+    {
+      "sceneId": "205-crem3",
+      "north": -149,
+      "areas": [
+        {
+          "name": "Chapel",
+          "yaw": 92.76,
+          "pitch": 16.3
+        }
+      ],
+      "sceneWideLabel": "Chapel"
+    },
+    {
+      "sceneId": "206-crem4",
+      "north": -124,
+      "areas": [
+        {
+          "name": "Chapel",
+          "yaw": 172.51,
+          "pitch": 23.12
+        }
+      ],
+      "sceneWideLabel": "Chapel"
+    },
+    {
+      "sceneId": "207-crem5",
+      "north": -117,
+      "areas": [
+        {
+          "name": "Chapel",
+          "yaw": 159.19,
+          "pitch": 18.34
+        }
+      ],
+      "sceneWideLabel": "Chapel"
+    },
+    {
+      "sceneId": "208-crem6",
+      "north": -169,
+      "areas": [
+        {
+          "name": "Chapel",
+          "yaw": 106.41,
+          "pitch": 21.16
+        }
+      ],
+      "sceneWideLabel": "Chapel"
+    },
+    {
+      "sceneId": "209-crem7",
+      "north": 170,
+      "areas": [
+        {
+          "name": "Chapel",
+          "yaw": 172.17,
+          "pitch": 19.21
+        }
+      ],
+      "sceneWideLabel": "Chapel"
+    },
+    {
+      "sceneId": "210-crem8",
+      "north": 153,
+      "areas": [
+        {
+          "name": "Chapel",
+          "yaw": 151.99,
+          "pitch": 22.82
+        }
+      ],
+      "sceneWideLabel": "Chapel"
+    },
+    {
+      "sceneId": "211-crem9",
+      "north": -72,
+      "areas": [
+        {
+          "name": "Rose Garden J",
+          "yaw": -64.59,
+          "pitch": -3.32
+        },
+        {
+          "name": "Rose Garden F",
+          "yaw": -137.14,
+          "pitch": 22.63
+        },
+        {
+          "name": "Chapel",
+          "yaw": 29.12,
+          "pitch": 4.94
+        }
+      ]
+    },
+    {
+      "sceneId": "212-crem10",
+      "north": -75,
+      "areas": [
+        {
+          "name": "Chapel",
+          "yaw": 26.46,
+          "pitch": -7.66
+        },
+        {
+          "name": "Rose Garden F",
+          "yaw": -119.39,
+          "pitch": 12.62
+        },
+        {
+          "name": "Rose Garden D",
+          "yaw": 165.24,
+          "pitch": 28.77
+        }
+      ]
+    },
+    {
+      "sceneId": "213-rosegarden-1",
+      "north": 11,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": -28.3,
+          "pitch": 15.18
+        }
+      ],
+      "sceneWideLabel": "Rose Garden F"
+    },
+    {
+      "sceneId": "214-rosegarden-2",
+      "north": -34,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": -17.88,
+          "pitch": -0.75
+        }
+      ],
+      "sceneWideLabel": "Rose Garden F"
+    },
+    {
+      "sceneId": "215-rosegarden-3",
+      "north": 13,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": 7.55,
+          "pitch": 1.94
+        }
+      ],
+      "sceneWideLabel": "Rose Garden F"
+    },
+    {
+      "sceneId": "216-rosegarden-4",
+      "north": 159,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": 35.22,
+          "pitch": 2.13
+        }
+      ],
+      "sceneWideLabel": "Rose Garden F"
+    },
+    {
+      "sceneId": "217-rosegarden-5",
+      "north": 45,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": -17.42,
+          "pitch": 21.8
+        }
+      ],
+      "sceneWideLabel": "Rose Garden F"
+    },
+    {
+      "sceneId": "218-rosegarden-6",
+      "north": 129,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": 117.47,
+          "pitch": 11.04
+        }
+      ],
+      "sceneWideLabel": "Rose Garden F"
+    },
+    {
+      "sceneId": "219-rosegarden-7",
+      "north": -103,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": 10.69,
+          "pitch": 6.46
+        }
+      ],
+      "sceneWideLabel": "Rose Garden F"
+    },
+    {
+      "sceneId": "220-rosegarden-8",
+      "north": -104,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": -115.03,
+          "pitch": 2.53
+        }
+      ],
+      "sceneWideLabel": "Rose Garden F"
+    },
+    {
+      "sceneId": "221-rosegarden-9",
+      "north": -122,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": 58.45,
+          "pitch": 10.81
+        }
+      ],
+      "sceneWideLabel": "Rose Garden F"
+    },
+    {
+      "sceneId": "222-rosegarden-10",
+      "north": -174,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": -128.35,
+          "pitch": 24.05
+        }
+      ],
+      "sceneWideLabel": "Rose Garden F"
+    },
+    {
+      "sceneId": "223-entrance-1",
+      "north": -96,
+      "areas": [
+        {
+          "name": "Rose Garden D",
+          "yaw": 106.96,
+          "pitch": 34.5
+        },
+        {
+          "name": "Rose Garden F",
+          "yaw": -151.06,
+          "pitch": 15.48
+        },
+        {
+          "name": "Chapel",
+          "yaw": -8.24,
+          "pitch": -21.56
+        }
+      ]
+    },
+    {
+      "sceneId": "226-entrance-4",
+      "north": 46,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": 78.28,
+          "pitch": 7.05
+        },
+        {
+          "name": "Rose Garden D",
+          "yaw": -168.87,
+          "pitch": -7.42
+        }
+      ]
+    },
+    {
+      "sceneId": "224-entrance-2",
+      "north": -122,
+      "areas": [
+        {
+          "name": "Rose Garden F",
+          "yaw": -112.83,
+          "pitch": 19.5
+        },
+        {
+          "name": "Rose Garden D",
+          "yaw": 43.91,
+          "pitch": -14.35
+        }
+      ]
+    },
+    {
+      "sceneId": "225-entrance-3",
+      "north": 72,
+      "areas": [
+        {
+          "name": "Rose Garden D",
+          "yaw": -95.2,
+          "pitch": 20.52
+        },
+        {
+          "name": "Rose Garden F",
+          "yaw": 64.38,
+          "pitch": 19.91
+        }
+      ]
+    },
+    {
+      "sceneId": "189-rsl-1",
+      "north": 129,
+      "areas": [
+        {
+          "name": "RSL Block",
+          "yaw": 56.61,
+          "pitch": 17.61
+        },
+        {
+          "name": "Lawn G",
+          "yaw": -146.27,
+          "pitch": -7.49
+        }
+      ]
+    },
+    {
+      "sceneId": "190-rsl-2",
+      "north": 151,
+      "areas": [
+        {
+          "name": "Lawn G",
+          "yaw": -143.64,
+          "pitch": 18.8
+        },
+        {
+          "name": "RSL Block",
+          "yaw": 51.87,
+          "pitch": 24.01
+        }
+      ]
+    },
+    {
+      "sceneId": "191-rsl-3",
+      "north": 146,
+      "areas": [
+        {
+          "name": "Contemplation Gardens",
+          "yaw": 65.18,
+          "pitch": 19.75
+        },
+        {
+          "name": "Lawn G",
+          "yaw": -153.2,
+          "pitch": 16.61
+        }
+      ]
+    },
+    {
+      "sceneId": "118-dixie-drive---1",
+      "north": -70,
+      "areas": [
+        {
+          "name": "Conifer Gardens",
+          "yaw": -49.39,
+          "pitch": 23
+        },
+        {
+          "name": "Lawn K",
+          "yaw": 89.19,
+          "pitch": 10.19
+        }
+      ]
+    },
+    {
+      "sceneId": "120-dixie-drive---3",
+      "north": -62,
+      "areas": [
+        {
+          "name": "Lawn K",
+          "yaw": 135.53,
+          "pitch": -0.87
+        },
+        {
+          "name": "Roman Catholic E",
+          "yaw": 76.22,
+          "pitch": -5.44
+        },
+        {
+          "name": "Lawn K",
+          "yaw": -52.26,
+          "pitch": 5.84
+        }
+      ]
+    },
+    {
+      "sceneId": "121-dixie-drive---4",
+      "north": -72,
+      "areas": [
+        {
+          "name": "Roman Catholic E",
+          "yaw": 120.12,
+          "pitch": 11.61
+        },
+        {
+          "name": "Lawn K",
+          "yaw": -52.26,
+          "pitch": 5.84
+        }
+      ]
+    },
+    {
+      "sceneId": "122-dixie-drive---5",
+      "north": -73,
+      "areas": [
+        {
+          "name": "Lawn K",
+          "yaw": -81.94,
+          "pitch": 20
+        },
+        {
+          "name": "Roman Catholic E",
+          "yaw": 96.46,
+          "pitch": 7.63
+        }
+      ]
+    },
+    {
+      "sceneId": "119-dixie-drive---2",
+      "north": -71,
+      "areas": [
+        {
+          "name": "Lawn K",
+          "yaw": 104.44,
+          "pitch": 9.92
+        }
+      ],
+      "sceneWideLabel": "Lawn K"
+    },
+    {
+      "sceneId": "124-dixie-drive---7",
+      "north": -85,
+      "areas": [
+        {
+          "name": "Lawn K",
+          "yaw": -64.88,
+          "pitch": 25.44
+        },
+        {
+          "name": "Roman Catholic E",
+          "yaw": 102.35,
+          "pitch": 20.36
+        }
+      ]
+    },
+    {
+      "sceneId": "125-dixie-drive---8",
+      "north": -122,
+      "areas": [
+        {
+          "name": "Roman Catholic E",
+          "yaw": 55.43,
+          "pitch": 8.41
+        },
+        {
+          "name": "Lawn L",
+          "yaw": -121.59,
+          "pitch": 19.6
+        }
+      ]
+    },
+    {
+      "sceneId": "126-dixie-drive---9",
+      "north": -79,
+      "areas": [
+        {
+          "name": "Lawn L",
+          "yaw": -99.94,
+          "pitch": 20.02
+        },
+        {
+          "name": "Roman Catholic E",
+          "yaw": 12.72,
+          "pitch": 10.41
+        }
+      ]
+    },
+    {
+      "sceneId": "155-shears-drive-roaman-catholic-a-b---1",
+      "north": 175,
+      "areas": [
+        {
+          "name": "Roman Catholic C",
+          "yaw": -82.24,
+          "pitch": 3.19
+        },
+        {
+          "name": "Roman Catholic D",
+          "yaw": 86.72,
+          "pitch": 4.33
+        }
+      ]
+    },
+    {
+      "sceneId": "156-shears-drive-roaman-catholic-a-b---2",
+      "north": -169,
+      "areas": [
+        {
+          "name": "Roman Catholic D",
+          "yaw": 105.01,
+          "pitch": 9.09
+        },
+        {
+          "name": "Roman Catholic C",
+          "yaw": -100.63,
+          "pitch": -8.25
+        }
+      ]
+    },
+    {
+      "sceneId": "157-shears-drive-roaman-catholic-a-b---3",
+      "north": 177,
+      "areas": [
+        {
+          "name": "Roman Catholic D",
+          "yaw": 10.92,
+          "pitch": 3.1
+        },
+        {
+          "name": "Roman Catholic C",
+          "yaw": -115.7,
+          "pitch": 10.55
+        }
+      ]
+    },
+    {
+      "sceneId": "146-roman-catholic-b-d-e-lawn-l-shears-drive-6",
+      "north": 0,
+      "areas": []
+    },
+    {
+      "sceneId": "145-roman-catholic-b-d-e-lawn-l-shears-drive-5",
+      "north": 0,
+      "areas": []
+    },
+    {
+      "sceneId": "144-roman-catholic-b-d-e-lawn-l-shears-drive-4",
+      "north": 79,
+      "areas": [
+        {
+          "name": "Roman Catholic B",
+          "yaw": 175.15,
+          "pitch": -5.35
+        },
+        {
+          "name": "Roman Catholic E",
+          "yaw": 43.78,
+          "pitch": 17.61
+        }
+      ]
+    },
+    {
+      "sceneId": "143-roman-catholic-b-d-e-lawn-l-shears-drive-3",
+      "north": 172,
+      "areas": [
+        {
+          "name": "Roman Catholic E",
+          "yaw": 71.48,
+          "pitch": 22.58
+        },
+        {
+          "name": "Roman Catholic B",
+          "yaw": -112.63,
+          "pitch": -2.63
+        }
+      ]
+    },
+    {
+      "sceneId": "142-roman-catholic-b-d-e-lawn-l-shears-drive-2",
+      "north": 4,
+      "areas": [
+        {
+          "name": "Roman Catholic D",
+          "yaw": 111.99,
+          "pitch": 18.29
+        },
+        {
+          "name": "Lawn L",
+          "yaw": -89.96,
+          "pitch": 24.56
+        }
+      ]
+    },
+    {
+      "sceneId": "148-roman-catholic-a-b",
+      "north": 177,
+      "areas": [
+        {
+          "name": "Roman Catholic A",
+          "yaw": -72.1,
+          "pitch": 20.88
+        },
+        {
+          "name": "Roman Catholic B",
+          "yaw": 65.55,
+          "pitch": 15.89
+        }
+      ]
+    },
+    {
+      "sceneId": "149-roman-catholic-a-b",
+      "north": 179,
+      "areas": [
+        {
+          "name": "Roman Catholic A",
+          "yaw": -95.58,
+          "pitch": 21.81
+        },
+        {
+          "name": "Roman Catholic B",
+          "yaw": 177.25,
+          "pitch": 11.14
+        }
+      ]
+    },
+    {
+      "sceneId": "150-roman-catholic-a-b",
+      "north": -179,
+      "areas": [
+        {
+          "name": "Roman Catholic A",
+          "yaw": -2.38,
+          "pitch": 16.11
+        },
+        {
+          "name": "Roman Catholic B",
+          "yaw": 87.64,
+          "pitch": 15.15
+        }
+      ]
+    },
+    {
+      "sceneId": "151-roman-catholic-a-b",
+      "north": -168,
+      "areas": [
+        {
+          "name": "Roman Catholic A",
+          "yaw": -79.73,
+          "pitch": 22.99
+        },
+        {
+          "name": "Roman Catholic B",
+          "yaw": 95.46,
+          "pitch": 36.68
+        }
+      ]
+    },
+    {
+      "sceneId": "158-shears-drive-roaman-catholic-a-bshears-drive-roaman-catholic-a-b---4",
+      "north": 177,
+      "areas": [
+        {
+          "name": "Roman Catholic D",
+          "yaw": 123.39,
+          "pitch": 4.34
+        },
+        {
+          "name": "Roman Catholic C",
+          "yaw": -122.56,
+          "pitch": 6.59
+        },
+        {
+          "name": "Roman Catholic A",
+          "yaw": -51.75,
+          "pitch": -10.03
+        },
+        {
+          "name": "Roman Catholic B",
+          "yaw": 56.44,
+          "pitch": -21.81
+        }
+      ]
+    },
+    {
+      "sceneId": "152-shears-drive-presbyterian-c-lawn-g--1",
+      "north": 0,
+      "areas": []
+    },
+    {
+      "sceneId": "181-shears-drive-presbyterian-c-lawn-g--1",
+      "north": -4,
+      "areas": [
+        {
+          "name": "Presbyterian C",
+          "yaw": -82.79,
+          "pitch": 17.52
+        },
+        {
+          "name": "Lawn G",
+          "yaw": 88.65,
+          "pitch": 12.94
+        }
+      ]
+    },
+    {
+      "sceneId": "182-shears-drive-presbyterian-c-lawn-g--2",
+      "north": -2,
+      "areas": [
+        {
+          "name": "Presbyterian C",
+          "yaw": -7.05,
+          "pitch": 8.86
+        },
+        {
+          "name": "Lawn G",
+          "yaw": 90.62,
+          "pitch": 10.36
+        }
+      ]
+    },
+    {
+      "sceneId": "183-shears-drive-presbyterian-c-lawn-g--3",
+      "north": -4,
+      "areas": [
+        {
+          "name": "Presbyterian C",
+          "yaw": -90.99,
+          "pitch": 5.73
+        },
+        {
+          "name": "Lawn G",
+          "yaw": 80.29,
+          "pitch": 4.6
+        }
+      ]
+    },
+    {
+      "sceneId": "184-shears-drive-presbyterian-c-lawn-g--4",
+      "north": -3,
+      "areas": [
+        {
+          "name": "Presbyterian C",
+          "yaw": -95.24,
+          "pitch": 14.06
+        },
+        {
+          "name": "Lawn G",
+          "yaw": 72.55,
+          "pitch": 9.77
+        }
+      ]
+    },
+    {
+      "sceneId": "153-shears-drive-presbyterian-c-lawn-g--2",
+      "north": 0,
+      "areas": []
+    },
+    {
+      "sceneId": "154-shears-drive-presbyterian-c-lawn-g--3",
+      "north": 0,
+      "areas": []
+    },
+    {
+      "sceneId": "147-roman-catholic-b-d-e-lawn-l-shears-drive-7",
+      "north": 0,
+      "areas": []
+    },
+    {
+      "sceneId": "185-grahamdrive-7",
+      "north": -114,
+      "areas": [
+        {
+          "name": "Roman Catholic D",
+          "yaw": 59.85,
+          "pitch": -8.92
+        },
+        {
+          "name": "Lawn G",
+          "yaw": -8.18,
+          "pitch": 19.88
+        },
+        {
+          "name": "Methodist E",
+          "yaw": -50.35,
+          "pitch": 1.79
+        }
+      ]
+    },
+    {
+      "sceneId": "186-grahamdrive-8",
+      "north": -110,
+      "areas": [
+        {
+          "name": "Roman Catholic D",
+          "yaw": 82.59,
+          "pitch": 14.59
+        },
+        {
+          "name": "Methodist E",
+          "yaw": -104.39,
+          "pitch": 25.21
+        }
+      ]
+    },
+    {
+      "sceneId": "187-grahamdrive-9",
+      "north": -83,
+      "areas": [
+        {
+          "name": "Roman Catholic D",
+          "yaw": 148.5,
+          "pitch": 27.51
+        },
+        {
+          "name": "Methodist E",
+          "yaw": -70.33,
+          "pitch": -0.41
+        }
+      ]
+    },
+    {
+      "sceneId": "188-grahamdrive-6",
+      "north": -116,
+      "areas": [
+        {
+          "name": "Roman Catholic D",
+          "yaw": 44.87,
+          "pitch": 26.47
+        },
+        {
+          "name": "Lawn G",
+          "yaw": -41.68,
+          "pitch": 18.51
+        }
+      ]
+    },
+    {
+      "sceneId": "167-stone-drive-open-ground-f---4",
+      "north": -49,
+      "areas": [
+        {
+          "name": "Open Ground F",
+          "yaw": 81.45,
+          "pitch": 10.77
+        },
+        {
+          "name": "Conifer Gardens",
+          "yaw": 5.75,
+          "pitch": 2.9
+        }
+      ]
+    },
+    {
+      "sceneId": "161-stone-drive-lawn-k-conifer-gardens---3",
+      "north": 3,
+      "areas": [
+        {
+          "name": "Open Ground C, D &E",
+          "yaw": -107.88,
+          "pitch": -3.94
+        },
+        {
+          "name": "Conifer Gardens",
+          "yaw": 10.03,
+          "pitch": -5.62
+        }
+      ]
+    },
+    {
+      "sceneId": "162-stone-drive-lawn-k-conifer-gardens---4",
+      "north": -1,
+      "areas": [
+        {
+          "name": "Open Ground C, D &E",
+          "yaw": -98.93,
+          "pitch": 6.64
+        },
+        {
+          "name": "Conifer Gardens",
+          "yaw": 10.03,
+          "pitch": -5.62
+        }
+      ]
+    },
+    {
+      "sceneId": "168-grahamdrive-1",
+      "north": -112,
+      "areas": [
+        {
+          "name": "Lawn K",
+          "yaw": 78.69,
+          "pitch": 11.65
+        },
+        {
+          "name": "Lawn H",
+          "yaw": -117.27,
+          "pitch": 6.27
+        }
+      ]
+    },
+    {
+      "sceneId": "169-grahamdrive-2",
+      "north": -106,
+      "areas": [
+        {
+          "name": "Lawn H",
+          "yaw": -96.67,
+          "pitch": 6.93
+        },
+        {
+          "name": "Lawn K",
+          "yaw": 38.66,
+          "pitch": 12.66
+        }
+      ]
+    },
+    {
+      "sceneId": "170-grahamdrive-3",
+      "north": -113,
+      "areas": [
+        {
+          "name": "Lawn K",
+          "yaw": 61.06,
+          "pitch": 9.41
+        },
+        {
+          "name": "Lawn H",
+          "yaw": -29.25,
+          "pitch": 18.71
+        }
+      ]
+    },
+    {
+      "sceneId": "171-grahamdrive-4",
+      "north": -113,
+      "areas": [
+        {
+          "name": "Lawn L",
+          "yaw": 54.48,
+          "pitch": 7.1
+        },
+        {
+          "name": "Lawn H",
+          "yaw": -104.71,
+          "pitch": 5.1
+        }
+      ]
+    },
+    {
+      "sceneId": "174-lawnh-2",
+      "north": 158,
+      "areas": [
+        {
+          "name": "Open Ground C,D & E",
+          "yaw": 59.76,
+          "pitch": 8.13
+        },
+        {
+          "name": "Lawn H",
+          "yaw": -117.3,
+          "pitch": 20.12
+        }
+      ]
+    },
+    {
+      "sceneId": "180-horsefall-4",
+      "north": 68,
+      "areas": [
+        {
+          "name": "Lawn H",
+          "yaw": -99.27,
+          "pitch": 13.25
+        },
+        {
+          "name": "Garden Of Memories",
+          "yaw": 76.94,
+          "pitch": 24.43
+        }
+      ]
+    },
+    {
+      "sceneId": "176-horsefall-5",
+      "north": 63,
+      "areas": [
+        {
+          "name": "RSL Block",
+          "yaw": 50.99,
+          "pitch": 3.72
+        },
+        {
+          "name": "Presbyterian C",
+          "yaw": -97.48,
+          "pitch": 27.03
         }
       ]
     }

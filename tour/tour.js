@@ -1,6 +1,6 @@
 // ============================================================================
 // Auto Tour System for Marzipano Virtual Tours
-// Auto-hides UI when stopped and includes loop toggle
+// By Jack Slorach
 // ============================================================================
 
 window.AutoTour = {
@@ -24,22 +24,24 @@ window.AutoTour = {
       if (!res.ok) throw new Error(`Cannot load tour: ${tourName}`);
       const data = await res.json();
 
+      // Nice label from filename
       this.tourLabel = tourName
         .replace(/\.json$/i, "")
         .replace(/[_-]/g, " ")
         .replace(/\b\w/g, c => c.toUpperCase());
 
+      // Extract scenes and timing; DO NOT override loop here
       if (Array.isArray(data.waypoints) && data.waypoints.length > 0) {
         this.scenes = data.waypoints.map(w => w.sceneId || w);
         this.baseDelay = data.duration || 6000;
         this.delay = this.baseDelay / 4;
-        this.loop = data.loop ?? true;
       } else if (Array.isArray(data.scenes)) {
         this.scenes = data.scenes;
         this.baseDelay = data.duration || 6000;
         this.delay = this.baseDelay / 4;
-        this.loop = data.loop ?? true;
-      } else return false;
+      } else {
+        return false;
+      }
 
       this.ensureProgressPopup();
       this.ensureSpeedPanel();
@@ -54,12 +56,11 @@ window.AutoTour = {
   // ------------------- Start playback -------------------
   async start(tourName) {
     if (this.active) return;
-
-    // ✅ Cleanly close MapUI and Info Popup without touching pins or map transforms
     try {
       const mapClose = document.getElementById("m4-close");
-      if (mapClose) mapClose.click();
-      else {
+      if (mapClose) {
+        mapClose.click();
+      } else {
         const mapBackdrop = document.getElementById("m4-backdrop");
         if (mapBackdrop) {
           mapBackdrop.style.opacity = "0";
@@ -76,17 +77,21 @@ window.AutoTour = {
       console.warn("[Tour] Popup close fallback", e);
     }
 
-    // ✅ Keep pin layer stable — never hide or reset it
+    // Keep pin layer stable — never hide or reset it beyond ensuring it's visible
     const pinLayer = document.getElementById("m4-pinlayer");
     if (pinLayer) {
       pinLayer.style.display = "block";
       pinLayer.style.visibility = "visible";
       pinLayer.style.opacity = "1";
-      pinLayer.style.transform = "none";
+      // Don't touch transform here
     }
 
     const ok = await this.load(tourName);
     if (!ok) return;
+
+    // Read loop from UI checkbox (default unchecked => false)
+    const loopBox = document.querySelector('#tour-speed-wrap input[type="checkbox"]');
+    this.loop = !!(loopBox && loopBox.checked);
 
     this.active = true;
     this.current = 0;
@@ -102,8 +107,6 @@ window.AutoTour = {
     this.stopping = true;
     clearTimeout(this.timer);
     this.hideUI();
-
-    // ✅ Keep pins visible after tour ends
     const pinLayer = document.getElementById("m4-pinlayer");
     if (pinLayer) {
       pinLayer.style.display = "block";
@@ -115,10 +118,10 @@ window.AutoTour = {
   // ------------------- Advance to next scene -------------------
   next() {
     if (!this.active || this.stopping) return;
+
     const scene = this.scenes[this.current];
     const sceneId = typeof scene === "string" ? scene : scene?.sceneId;
     if (!sceneId) return;
-
     if (typeof window.safeSwitchToScene === "function") window.safeSwitchToScene(sceneId);
     if (typeof window.highlightActiveRow === "function") window.highlightActiveRow(sceneId);
     if (typeof window.highlightActivePin === "function") window.highlightActivePin(sceneId);
@@ -127,8 +130,14 @@ window.AutoTour = {
 
     this.current++;
     if (this.current >= this.scenes.length) {
-      if (this.loop) this.current = 0;
-      else return this.stop();
+      const loopBox = document.querySelector('#tour-speed-wrap input[type="checkbox"]');
+      const shouldLoop = loopBox ? loopBox.checked : this.loop;
+
+      if (shouldLoop) {
+        this.current = 0;
+      } else {
+        return this.stop();
+      }
     }
 
     clearTimeout(this.timer);
@@ -217,7 +226,7 @@ window.AutoTour = {
 
     const loopBox = document.createElement("input");
     loopBox.type = "checkbox";
-    loopBox.checked = this.loop;
+    loopBox.checked = this.loop; 
     loopBox.addEventListener("change", () => {
       this.loop = loopBox.checked;
       console.log("[Tour] Loop set to", this.loop);
@@ -228,6 +237,7 @@ window.AutoTour = {
       const multiplier = parseFloat(slider.value);
       this.delay = (this.baseDelay / 4) / multiplier;
       valLbl.textContent = `×${multiplier.toFixed(2)}`;
+
       if (this.active && !this.stopping) {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => this.next(), this.delay);
@@ -241,6 +251,7 @@ window.AutoTour = {
     this.sliderEl = slider;
   },
 
+  // ------------------- UI fade helpers -------------------
   showUI(show = true) {
     if (this.progressEl) this.progressEl.style.opacity = show ? "1" : "0";
     if (this.speedWrapEl) this.speedWrapEl.style.opacity = show ? "1" : "0";
@@ -249,7 +260,7 @@ window.AutoTour = {
   hideUI() {
     if (this.progressEl) this.progressEl.style.opacity = "0";
     if (this.speedWrapEl) this.speedWrapEl.style.opacity = "0";
-  },
+  }
 };
 
 // ============================================================================

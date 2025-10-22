@@ -1,0 +1,8 @@
+{
+  "tours": [
+    { "file": "birdsong_gardens.json", "name": "Birdsong Gardens" },
+    { "file": "south-north.json",   "name": "South to North"  },
+    { "file": "north-south.json",   "name": "North to South"  },
+    { "file": "around-the-cemetary.json",   "name": "Aroumd The Cemetary"  }
+  ]
+}

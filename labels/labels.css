@@ -43,12 +43,67 @@
 /* If you don't want area markers, keep these hidden */
 .area-mark, .area-dot { display:none !important; }
 
-/* Area chip (under the compass) */
-#label-chip{
-  min-height:28px; padding:6px 12px; border-radius:12px;
-  font:600 16px/1 system-ui, sans-serif; color:#fff;
-  background:rgba(0,0,0,.55); backdrop-filter:saturate(160%) blur(3px);
-  box-shadow:0 2px 10px rgba(0,0,0,.25);
-  opacity:0; transition:opacity .15s;
+/* Centered under-compass chip */
+#comp-chip{
+  position: fixed;
+  top: 46px;                 /* sits just under your compass bar; tweak if needed */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1;
+  background: rgba(36,38,43,.92);
+  color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+  z-index: 99998;
 }
-#label-chip.visible{ opacity:1; }
+#comp-chip.visible{ opacity: 1; }
+/* Completely disable compass + chip on mobile/touch */
+@media (max-width: 900px), (pointer: coarse) {
+  #label-compass,
+  #comp-chip {
+    display: none !important;
+  }
+}
+
+/* --- Hard clip the contents to the rounded box --- */
+#label-compass{
+  /* you already have overflow:hidden; keep it */
+  overflow: hidden;
+  /* force clipping even with GPU transforms/filters */
+  clip-path: inset(0 round 8px);   /* respects the same 8px radius */
+  contain: paint;                  /* isolate painting to this box */
+}
+
+/* Make sure all moving parts are clipped and non-interactive */
+#comp-ruler, .tick, .tick-label {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* (Optional) small fade at the left/right edges so half labels
+   look neat when they approach the border */
+#label-compass::before,
+#label-compass::after{
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 20px;
+  pointer-events: none;
+  z-index: 1;                      /* above ticks, inside the box */
+  background: linear-gradient(to right, rgba(0,0,0,.25), rgba(0,0,0,0));
+}
+#label-compass::before { left: 0; }
+#label-compass::after  { right: 0; transform: scaleX(-1); }
+
+/* Keep tick labels tidy near edges */
+.tick-label{
+  max-width: 48px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
